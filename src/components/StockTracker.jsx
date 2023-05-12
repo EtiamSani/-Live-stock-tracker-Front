@@ -1,4 +1,5 @@
 import { FaPencilAlt } from "react-icons/fa";
+import { RiDeleteBin7Line } from "react-icons/ri";
 
 const StockTracker = () => {
   return (
@@ -42,20 +43,22 @@ const StockTracker = () => {
                 </div>
               </div>
             </td>
-            <td>
+            <td className="font-extrabold">
               298 €
               <br />
-              <span className="badge-ghost badge badge-sm">+2.4</span>
-              <span className="badge-ghost badge badge-sm">+5 %</span>
+              <span className="badge-ghost badge badge-sm font-bold">+2.4</span>
+              <span className="badge-ghost badge badge-sm font-bold">+5 %</span>
             </td>
             <td>
               200 €
-              <span className="badge-ghost badge badge-sm btn-xs btn hover:bg-red-500">
-                <FaPencilAlt />
+              <span className="btn-xs btn ml-2">
+                <FaPencilAlt className="text-base" />
               </span>
             </td>
             <th>
-              <button className="btn-ghost btn-xs btn">details</button>
+              <button className="btn-ghost btn-sm btn hover:bg-red-300">
+                <RiDeleteBin7Line className="text-lg" />
+              </button>
             </th>
           </tr>
           {/* row 2 */}
