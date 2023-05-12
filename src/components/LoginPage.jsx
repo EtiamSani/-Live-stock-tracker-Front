@@ -2,7 +2,7 @@ const LoginPage = () => {
   return (
     <div class="relative flex h-screen flex-col justify-center overflow-hidden">
       <div class="m-auto w-full rounded-md bg-white p-6 shadow-md lg:max-w-lg">
-        <h1 class="text-center text-3xl font-semibold text-purple-700">
+        <h1 class="text-center text-3xl font-semibold text-blue-700">
           Connectez-vous
         </h1>
         <form class="space-y-4">
@@ -30,10 +30,10 @@ const LoginPage = () => {
             href="#"
             class="text-xs text-gray-600 hover:text-blue-600 hover:underline"
           >
-            Forget Password?
+            Mot de pass oublié ?
           </a>
           <div>
-            <button class="btn-primary btn">Login</button>
+            <button class="btn-primary btn">Connecter</button>
           </div>
         </form>
       </div>

@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import LoginPage from "./components/LoginPage";
+import StockTracker from "./components/StockTracker";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/watchlists" element={<StockTracker />} />
         </Routes>
       </div>
     </BrowserRouter>
