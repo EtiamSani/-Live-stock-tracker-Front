@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import LoginPage from "./components/LoginPage";
 import StockTracker from "./components/StockTracker";
+import SearchBar from "./components/SearchBar";
 
 const App = () => {
   return (
