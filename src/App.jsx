@@ -1,12 +1,18 @@
 import { createRoot } from "react-dom/client";
-import Nav from "./components/Nav";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import LoginPage from "./components/LoginPage";
 
 const App = () => {
   return (
-    <div>
-      <h1>HelloWorld</h1>
-      <Nav />
-    </div>
+    <BrowserRouter>
+      <div>
+        <NavBar />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 
