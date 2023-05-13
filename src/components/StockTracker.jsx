@@ -2,6 +2,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import SearchBar from "./SearchBar";
+import sartoriusLogo from "./sartorius-logo-vector.png";
 
 const StockTracker = () => {
   return (
@@ -36,7 +37,7 @@ const StockTracker = () => {
                   <div className="avatar">
                     <div className="h-12 w-12 rounded-full">
                       <img
-                        src="/tailwind-css-component-profile-2@56w.png"
+                        src={sartoriusLogo}
                         alt="Avatar Tailwind CSS Component"
                       />
                     </div>
@@ -48,14 +49,14 @@ const StockTracker = () => {
                 </div>
               </td>
               <td className="font-extrabold">
-                298 €
+                298
                 <br />
                 <div className="flex text-xs">
-                  <div className="font-bold">+2.4</div>
-                  <div className="w-7 font-bold">+50%</div>
+                  <div className="-ml-3 font-bold">+20000</div>
+                  <div className="ml-1 w-7 font-bold">+50%</div>
                 </div>
               </td>
-              <td className="flex justify-center ">
+              <td className="mt-4 flex items-center justify-center">
                 200
                 <span className="btn-xs btn ml-2">
                   <FaPencilAlt className="text-base" />
