@@ -1,10 +1,12 @@
 const SearchBar = () => {
   return (
-    <input
-      type="text"
-      placeholder="Type here"
-      className="input-bordered input-primary input w-full max-w-xl"
-    />
+    <div className="flex justify-center">
+      <input
+        type="text"
+        placeholder="Type here"
+        className="input-bordered input-primary input w-full max-w-xs lg:max-w-xl"
+      />
+    </div>
   );
 };
 

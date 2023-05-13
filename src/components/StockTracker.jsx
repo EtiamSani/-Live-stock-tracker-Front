@@ -8,7 +8,7 @@ const StockTracker = () => {
     <div className="flex items-center justify-center">
       <div className="m-auto ">
         <div className=" m-10 ">
-          <SearchBar className="w-10" />
+          <SearchBar />
         </div>
         <div>
           <a className="btn">
