@@ -55,7 +55,7 @@ const StockTracker = () => {
               <td>
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
-                    <div className="h-12 w-12 rounded-full">
+                    <div className="h-11 w-11 rounded-full">
                       <img
                         src={sartoriusLogo}
                         alt="Avatar Tailwind CSS Component"
@@ -79,7 +79,7 @@ const StockTracker = () => {
               <td className="mt-6 flex items-center justify-center p-0">
                 {isEditing ? (
                   <input
-                    className="input-xs w-12"
+                    className="input-xs w-12 rounded-md"
                     type="number"
                     value={price}
                     onChange={handlePriceChange}
