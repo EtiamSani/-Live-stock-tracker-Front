@@ -63,14 +63,13 @@ const StockTracker = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">Sartorius Stedim</div>
+                    <div className="font-bold">Sartorius stedim</div>
                     <div className="text-sm opacity-50">DIM</div>
                   </div>
                 </div>
               </td>
               <td className="font-extrabold">
-                298
-                <br />
+                <div className="-mt-1">298</div>
                 <div className="flex text-xs">
                   <div className="-ml-3 font-bold">+20000</div>
                   <div className="ml-1 w-7 font-bold">+50%</div>
