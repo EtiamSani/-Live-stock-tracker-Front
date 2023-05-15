@@ -1,8 +1,10 @@
 import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { AiOutlineFileAdd } from "react-icons/ai";
+
 import SearchBar from "./SearchBar";
 import sartoriusLogo from "./sartorius-logo-vector.png";
+import ListModal from "./ListModal";
 
 const StockTracker = () => {
   return (
@@ -12,9 +14,7 @@ const StockTracker = () => {
           <SearchBar />
         </div>
         <div className="flex flex-nowrap items-center justify-center">
-          <a className="btn ">
-            Ajouter liste <AiOutlineFileAdd className="mx-1 text-xl" />
-          </a>
+          <ListModal />
           <a className="badge-ghost badge badge-sm btn m-2 p-2 font-bold">
             Quality stock
           </a>
