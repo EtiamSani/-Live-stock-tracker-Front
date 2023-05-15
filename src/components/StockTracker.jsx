@@ -1,12 +1,32 @@
 import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import { AiOutlineFileAdd } from "react-icons/ai";
-
+import { useState } from "react";
 import SearchBar from "./SearchBar";
 import sartoriusLogo from "./sartorius-logo-vector.png";
 import ListModal from "./ListModal";
 
 const StockTracker = () => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [price, setPrice] = useState(0); // Initial price value
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
+
+  const handlePriceSubmit = () => {
+    setIsEditing(false);
+    // You can use the updated price here, for example, to update the data in your backend.
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handlePriceSubmit();
+    }
+  };
   return (
     <div className="flex items-center justify-center">
       <div className="m-auto ">
@@ -56,14 +76,28 @@ const StockTracker = () => {
                   <div className="ml-1 w-7 font-bold">+50%</div>
                 </div>
               </td>
-              <td className="mt-4 flex items-center justify-center">
-                200
-                <span className="btn-xs btn ml-2">
-                  <FaPencilAlt className="text-base" />
-                </span>
+              <td className="mt-6 flex items-center justify-center p-0">
+                {isEditing ? (
+                  <input
+                    className="input-xs w-12"
+                    type="number"
+                    value={price}
+                    onChange={handlePriceChange}
+                    onBlur={handlePriceSubmit}
+                    onKeyDown={handleKeyDown}
+                    autoFocus
+                  />
+                ) : (
+                  <>
+                    {price}
+                    <span className="btn-xs btn ml-1" onClick={handleEditClick}>
+                      <FaPencilAlt className="text-base" />
+                    </span>
+                  </>
+                )}
               </td>
-              <th>
-                <button className="btn-ghost  btn-sm btn m-0 hover:bg-red-300">
+              <th className="p-0">
+                <button className="btn-ghost  btn-sm btn m-0 -ml-5  hover:bg-red-300">
                   <RiDeleteBin7Line className="text-lg" />
                 </button>
               </th>
