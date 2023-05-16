@@ -57,6 +57,10 @@ const StockTracker = () => {
               <a
                 key={index}
                 className="badge-ghost badge badge-sm btn m-2 p-2 font-bold"
+                data-set={item.id}
+                onClick={(e) => {
+                  console.log(e.currentTarget.dataset.set);
+                }}
               >
                 {item.name}
               </a>
