@@ -5,33 +5,18 @@ import SearchBar from "./SearchBar";
 import sartoriusLogo from "./sartorius-logo-vector.png";
 import ListModal from "./ListModal";
 import { useEffect } from "react";
+import fetchWatchLists from "../APIServices/fetchWatchLists";
+import { useQuery } from "@tanstack/react-query";
 
 const StockTracker = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [price, setPrice] = useState(0); // Initial price value
-  const [data, setData] = useState([]);
-  const base_url = "http://localhost:3000";
-
-  // Send a GET request
-  const fetchData = async () => {
-    try {
-      const response = await fetch(base_url + "/watchlist/investor/1");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      console.log("Fetch result:", result); // Log the parsed response
-      setData(result); // Store the data in state
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
-
-  // Call fetchData when the component mounts
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  // const [data, setData] = useState([]);
+  const { data, error, isLoading, isFetching, isError } = useQuery(
+    ["watchlist"],
+    fetchWatchLists
+  );
+  console.log({ isLoading, isFetching });
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -56,17 +41,29 @@ const StockTracker = () => {
         <div className=" m-10 ">
           <SearchBar />
         </div>
-        <div className="flex flex-wrap items-center justify-center">
+        <div className="ml-2.5 flex flex-wrap">
           <ListModal />
-          {data.map((item, index) => (
-            <a
-              key={index}
-              className="badge-ghost badge badge-sm btn m-2 p-2 font-bold"
-            >
-              {item.name}
-            </a>
-          ))}
         </div>
+        <div>
+          {isLoading ? (
+            // Loading state
+            <div>Loading...</div>
+          ) : isError ? (
+            // Error state
+            <div>Error: {error.message}</div>
+          ) : (
+            // Success state
+            data.map((item, index) => (
+              <a
+                key={index}
+                className="badge-ghost badge badge-sm btn m-2 p-2 font-bold"
+              >
+                {item.name}
+              </a>
+            ))
+          )}
+        </div>
+
         <table className="table-compact max-w-xs  lg:table lg:w-96">
           {/* head */}
           <thead>
