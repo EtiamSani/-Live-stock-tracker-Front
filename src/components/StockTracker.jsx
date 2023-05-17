@@ -14,7 +14,7 @@ import CompanyBadge from "./CompanyBadge";
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
   const [isEditing, setIsEditing] = useState(false);
-  const [price, setPrice] = useState(0); // Initial price value
+  const [isUpdating, setIsUpdating] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);
   const [updatedPrice, setUpdatedPrice] = useState(0);
 
@@ -52,6 +52,8 @@ const StockTracker = () => {
         return;
       }
 
+      setIsUpdating(true); // Définir isUpdating sur true avant la mise à jour
+
       // Appelez votre API pour mettre à jour la société avec le nouveau prix
       const response = await fetch(`${base_url}/company/${editingCompanyId}`, {
         method: "PUT",
@@ -67,11 +69,19 @@ const StockTracker = () => {
 
       // Réinitialisez les états et rechargez les données de la liste des sociétés
       setEditingCompanyId(null);
-      setUpdatedPrice(0);
       setIsEditing(false);
-      refetch();
+      await refetch(); // Attendre la fin du rechargement des données
+      // Mettre à jour le prix affiché en trouvant la société mise à jour
+      const updatedCompany = companiesInWatchList.find(
+        (company) => company.id === editingCompanyId
+      );
+      if (updatedCompany) {
+        setUpdatedPrice(updatedCompany.entryprice);
+      }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsUpdating(false); // Définir isUpdating sur false après la mise à jour
     }
   };
   const selectedId = localStorage.getItem("selectedId");
@@ -181,6 +191,7 @@ const StockTracker = () => {
                         onBlur={handlePriceSubmit}
                         onKeyDown={handleKeyDown}
                         autoFocus
+                        disabled={isUpdating} // Désactiver l'input pendant la mise à jour
                       />
                     ) : (
                       <>
