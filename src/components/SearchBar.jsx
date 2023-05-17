@@ -46,7 +46,10 @@ const SearchBar = () => {
       symbol: suggestion.displaySymbol,
       name: suggestion.description,
     };
+    console.log(dataToSend);
 
+    const selectedId = localStorage.getItem("selectedId");
+    console.log(selectedId);
     // Send a POST request
     const response = await fetch(base_url + "/company", {
       method: "POST", // or 'PUT'
@@ -62,8 +65,32 @@ const SearchBar = () => {
       throw new Error(message);
     }
 
-    const responseJson = await response.json();
-    console.log(responseJson);
+    // Get the response data (assuming it is json)
+    const responseData = await response.json();
+
+    // Use the id from the response to make another request
+    if (responseData && responseData.id) {
+      const attachResponse = await fetch(
+        `http://localhost:3000/watchlist/${selectedId}/company/${responseData.id}`,
+        {
+          method: "POST", // or whatever HTTP method is needed
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Check if the request was successful
+      if (!attachResponse.ok) {
+        console.error(
+          `Error attaching company to watchlist: ${attachResponse.statusText}`
+        );
+      }
+    } else {
+      console.error("No id returned from company creation");
+    }
+
+    console.log(responseData);
   };
 
   return (
