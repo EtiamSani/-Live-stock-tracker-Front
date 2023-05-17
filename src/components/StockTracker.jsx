@@ -4,22 +4,24 @@ import { useState } from "react";
 import SearchBar from "./SearchBar";
 import sartoriusLogo from "./sartorius-logo-vector.png";
 import ListModal from "./ListModal";
-import { useEffect } from "react";
 import fetchWatchLists from "../APIServices/fetchWatchLists";
 import { useQuery } from "@tanstack/react-query";
 import fetchCompaniesInWatchLists from "../APIServices/fetchCompaniesInWatchList";
+import { useParams } from "react-router-dom";
 
 const StockTracker = () => {
+  const base_url = "http://localhost:3000";
   const [isEditing, setIsEditing] = useState(false);
   const [price, setPrice] = useState(0); // Initial price value
-  // const [data, setData] = useState([]);
-  const { data, error, isLoading, isFetching, isError } = useQuery(
+
+  const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
     fetchWatchLists
   );
 
+  const { id } = useParams();
   const results = useQuery(
-    ["companiesInWatchlist"],
+    ["companiesInWatchlist", id],
     fetchCompaniesInWatchLists
   );
   const {
@@ -27,9 +29,8 @@ const StockTracker = () => {
     isLoading: isCompaniesLoading,
     isError: isCompaniesError,
     error: companiesError,
+    refetch,
   } = results;
-
-  console.log(companiesInWatchList);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -43,12 +44,30 @@ const StockTracker = () => {
     setIsEditing(false);
     // You can use the updated price here, for example, to update the data in your backend.
   };
+  const selectedId = localStorage.getItem("selectedId");
+  const handleDeleteCompany = async (companyId) => {
+    // Assume you have a DELETE endpoint that takes the company id in the url
+    const response = await fetch(
+      `${base_url}/watchlist/${selectedId}/company/${companyId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`An error occurred: ${response.statusText}`);
+    }
+
+    // Re-fetch the company list or remove the company from state
+    refetch();
+  };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handlePriceSubmit();
     }
   };
+
   return (
     <div className="flex items-center justify-center">
       <div className="m-auto ">
@@ -75,6 +94,7 @@ const StockTracker = () => {
                 onClick={(e) => {
                   const id = e.currentTarget.dataset.set;
                   localStorage.setItem("selectedId", id);
+                  refetch(["companiesInWatchlist", id]);
                 }}
               >
                 {item.name}
@@ -100,11 +120,13 @@ const StockTracker = () => {
               <div>Loading...</div>
             ) : isCompaniesError ? (
               // Error state
-              <div>Error: {companiesError.message}</div>
+              <tr>
+                <td>Error: {companiesError.message}</td>
+              </tr>
             ) : (
               // Success state
-              companiesInWatchList.map((company, index) => (
-                <tr key={index}>
+              companiesInWatchList.map((company) => (
+                <tr key={company.id}>
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
@@ -154,7 +176,13 @@ const StockTracker = () => {
                     )}
                   </td>
                   <th className="p-0">
-                    <button className="btn-ghost  btn-sm btn m-0 -ml-5  hover:bg-red-300">
+                    <button
+                      className="btn-ghost  btn-sm btn m-0 -ml-5  hover:bg-red-300"
+                      onClick={() => {
+                        handleDeleteCompany(company.id);
+                        console.log(company.id);
+                      }}
+                    >
                       <RiDeleteBin7Line className="text-lg" />
                     </button>
                   </th>
