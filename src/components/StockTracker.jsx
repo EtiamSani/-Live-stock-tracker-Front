@@ -112,7 +112,7 @@ const StockTracker = () => {
     <div className="flex items-center justify-center">
       <div className="m-auto ">
         <div className=" m-10 ">
-          <SearchBar />
+          <SearchBar refetch={refetch} />
         </div>
         <div className="ml-2.5 flex flex-wrap">
           <ListModal />
@@ -181,7 +181,7 @@ const StockTracker = () => {
                       <div className="ml-1 w-7 font-bold">+50%</div>
                     </div>
                   </td>
-                  <td className="mt-6 flex items-center justify-center p-0">
+                  <td className="mt-2 flex items-center justify-center p-0 text-xs">
                     {isEditing && editingCompanyId === company.id ? (
                       <input
                         className="input-xs w-12 rounded-md"

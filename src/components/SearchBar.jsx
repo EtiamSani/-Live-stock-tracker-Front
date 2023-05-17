@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { TbMoneybag } from "react-icons/tb";
 
-const SearchBar = () => {
+const SearchBar = ({ refetch }) => {
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const base_url = "http://localhost:3000";
 
@@ -38,8 +39,9 @@ const SearchBar = () => {
   };
 
   const handleSuggestionClick = async (suggestion) => {
-    setInput(suggestion.displaySymbol);
+    setInput("");
     setSuggestions([]);
+    setShowSuggestions(false); // Fermer les suggestions après le clic
 
     // Create a new object with the data to send
     const dataToSend = {
@@ -85,11 +87,11 @@ const SearchBar = () => {
         console.error(
           `Error attaching company to watchlist: ${attachResponse.statusText}`
         );
+      } else if (typeof refetch === "function") {
+        console.log("About to call refetch");
+        refetch();
       }
-    } else {
-      console.error("No id returned from company creation");
     }
-
     console.log(responseData);
   };
 
