@@ -155,7 +155,7 @@ const StockTracker = () => {
             ) : (
               // Success state
               companiesInWatchList.map((company) => (
-                <tr key={company.id}>
+                <tr key={company.id} className="border-b border-gray-200">
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
@@ -167,7 +167,11 @@ const StockTracker = () => {
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{company.name}</div>
+                        <div className="text-xs font-bold">
+                          <p className="w-24 overflow-hidden text-ellipsis whitespace-nowrap">
+                            {company.name}
+                          </p>
+                        </div>
                         <div className="text-sm opacity-50">
                           {company.symbol}
                         </div>
@@ -181,7 +185,7 @@ const StockTracker = () => {
                       <div className="ml-1 w-7 font-bold">+50%</div>
                     </div>
                   </td>
-                  <td className="mt-2 flex items-center justify-center p-0 text-xs">
+                  <td className="-ml-2 mt-3 flex items-center justify-center p-0 text-xs font-semibold">
                     {isEditing && editingCompanyId === company.id ? (
                       <input
                         className="input-xs w-12 rounded-md"
@@ -197,17 +201,17 @@ const StockTracker = () => {
                       <>
                         {company.entryprice}
                         <span
-                          className="btn-xs btn ml-1"
+                          className="btn-xs btn ml-1 p-0.5"
                           onClick={() => handleEditClick(company.id)} // Utiliser une fonction de rappel
                         >
-                          <FaPencilAlt className="text-base" />
+                          <FaPencilAlt className="text-xs" />
                         </span>
                       </>
                     )}
                   </td>
-                  <th className="p-0">
+                  <th className="-ml-5 p-0">
                     <button
-                      className="btn-ghost  btn-sm btn m-0 -ml-5  hover:bg-red-300"
+                      className="btn-ghost btn-sm btn p-0  hover:bg-red-300"
                       onClick={() => {
                         handleDeleteCompany(company.id);
                         console.log(company.id);
