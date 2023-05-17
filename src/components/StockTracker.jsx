@@ -1,6 +1,6 @@
 import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import sartoriusLogo from "./sartorius-logo-vector.png";
 import ListModal from "./ListModal";
@@ -10,6 +10,7 @@ import fetchCompaniesInWatchLists from "../APIServices/fetchCompaniesInWatchList
 import { useParams } from "react-router-dom";
 import TableHeader from "./TableHeader";
 import CompanyBadge from "./CompanyBadge";
+import WebSocketContext from "../APIServices/webSocketContext";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
@@ -17,6 +18,7 @@ const StockTracker = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);
   const [updatedPrice, setUpdatedPrice] = useState(0);
+  const [tradeData, setTradeData] = useState({});
 
   const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
@@ -108,6 +110,47 @@ const StockTracker = () => {
     }
   };
 
+  const socket = useContext(WebSocketContext);
+
+  useEffect(() => {
+    if (companiesInWatchList && socket) {
+      const symbols = companiesInWatchList.map((company) => company.symbol);
+
+      symbols.forEach((symbol) => {
+        const message = JSON.stringify({ type: "subscribe", symbol });
+        socket.send(message);
+      });
+
+      const handleTrade = (event) => {
+        const trade = JSON.parse(event.data);
+        console.log("Trade data:", trade.data[0].p);
+        // Update trade data for the specific symbol
+        setTradeData((prevTradeData) => ({
+          ...prevTradeData,
+          [trade.data[0].s]: trade.data[0].p,
+        }));
+      };
+
+      socket.addEventListener("open", () => {
+        // La connexion WebSocket est établie, vous pouvez commencer à envoyer des messages
+        symbols.forEach((symbol) => {
+          const message = JSON.stringify({ type: "subscribe", symbol });
+          socket.send(message);
+        });
+      });
+
+      socket.addEventListener("message", handleTrade);
+
+      return () => {
+        symbols.forEach((symbol) => {
+          const message = JSON.stringify({ type: "unsubscribe", symbol });
+          socket.send(message);
+        });
+        socket.removeEventListener("message", handleTrade);
+      };
+    }
+  }, [companiesInWatchList, socket]);
+
   return (
     <div className="flex items-center justify-center">
       <div className="m-auto ">
@@ -179,7 +222,7 @@ const StockTracker = () => {
                     </div>
                   </td>
                   <td className="font-extrabold">
-                    <div className="-mt-1">298</div>
+                    <div className="-mt-1">{tradeData[company.symbol]}</div>
                     <div className="flex text-xs">
                       <div className="-ml-3 font-bold">+20000</div>
                       <div className="ml-1 w-7 font-bold">+50%</div>

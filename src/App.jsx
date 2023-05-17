@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage";
 import StockTracker from "./components/StockTracker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import WebSocketProvider from "./components/WebSocketProvider";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -16,18 +17,20 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <div>
-          <NavBar />
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/watchlists" element={<StockTracker />} />
-          </Routes>
-        </div>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
+    <WebSocketProvider>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <div>
+            <NavBar />
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/watchlists" element={<StockTracker />} />
+            </Routes>
+          </div>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </WebSocketProvider>
   );
 };
 
