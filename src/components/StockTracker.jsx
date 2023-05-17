@@ -8,11 +8,15 @@ import fetchWatchLists from "../APIServices/fetchWatchLists";
 import { useQuery } from "@tanstack/react-query";
 import fetchCompaniesInWatchLists from "../APIServices/fetchCompaniesInWatchList";
 import { useParams } from "react-router-dom";
+import TableHeader from "./TableHeader";
+import CompanyBadge from "./CompanyBadge";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
   const [isEditing, setIsEditing] = useState(false);
   const [price, setPrice] = useState(0); // Initial price value
+  const [editingCompanyId, setEditingCompanyId] = useState(null);
+  const [updatedPrice, setUpdatedPrice] = useState(0);
 
   const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
@@ -32,17 +36,43 @@ const StockTracker = () => {
     refetch,
   } = results;
 
-  const handleEditClick = () => {
+  const handleEditClick = (companyId) => {
+    setEditingCompanyId(companyId);
     setIsEditing(true);
   };
 
   const handlePriceChange = (event) => {
-    setPrice(event.target.value);
+    setUpdatedPrice(event.target.value);
   };
 
-  const handlePriceSubmit = () => {
-    setIsEditing(false);
-    // You can use the updated price here, for example, to update the data in your backend.
+  const handlePriceSubmit = async () => {
+    try {
+      // Assurez-vous d'avoir l'ID de la société en cours d'édition
+      if (!editingCompanyId) {
+        return;
+      }
+
+      // Appelez votre API pour mettre à jour la société avec le nouveau prix
+      const response = await fetch(`${base_url}/company/${editingCompanyId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ entryprice: updatedPrice }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update company price");
+      }
+
+      // Réinitialisez les états et rechargez les données de la liste des sociétés
+      setEditingCompanyId(null);
+      setUpdatedPrice(0);
+      setIsEditing(false);
+      refetch();
+    } catch (error) {
+      console.error(error);
+    }
   };
   const selectedId = localStorage.getItem("selectedId");
   const handleDeleteCompany = async (companyId) => {
@@ -87,37 +117,26 @@ const StockTracker = () => {
           ) : (
             // Success state
             data.map((item, index) => (
-              <a
+              <CompanyBadge
                 key={index}
-                className="badge-ghost badge badge-sm btn m-2 p-2 font-bold"
-                data-set={item.id}
-                onClick={(e) => {
-                  const id = e.currentTarget.dataset.set;
-                  localStorage.setItem("selectedId", id);
-                  refetch(["companiesInWatchlist", id]);
-                }}
-              >
-                {item.name}
-              </a>
+                item={item}
+                handleClick={handleEditClick}
+                refetch={refetch}
+              />
             ))
           )}
         </div>
 
         <table className="table-compact max-w-xs  lg:table lg:w-96">
           {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Prix d'entrée</th>
-              <th></th>
-            </tr>
-          </thead>
+          <TableHeader />
           <tbody>
             {/* row 1 */}
             {isCompaniesLoading ? (
               // Loading state
-              <div>Loading...</div>
+              <tr>
+                <td>Loading...</td>
+              </tr>
             ) : isCompaniesError ? (
               // Error state
               <tr>
@@ -153,11 +172,11 @@ const StockTracker = () => {
                     </div>
                   </td>
                   <td className="mt-6 flex items-center justify-center p-0">
-                    {isEditing ? (
+                    {isEditing && editingCompanyId === company.id ? (
                       <input
                         className="input-xs w-12 rounded-md"
                         type="number"
-                        value={price}
+                        value={updatedPrice}
                         onChange={handlePriceChange}
                         onBlur={handlePriceSubmit}
                         onKeyDown={handleKeyDown}
@@ -165,10 +184,10 @@ const StockTracker = () => {
                       />
                     ) : (
                       <>
-                        {price}
+                        {company.entryprice}
                         <span
                           className="btn-xs btn ml-1"
-                          onClick={handleEditClick}
+                          onClick={() => handleEditClick(company.id)} // Utiliser une fonction de rappel
                         >
                           <FaPencilAlt className="text-base" />
                         </span>
