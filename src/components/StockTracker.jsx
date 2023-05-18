@@ -21,6 +21,7 @@ const StockTracker = () => {
   const [updatedPrice, setUpdatedPrice] = useState(0);
   const [tradeData, setTradeData] = useState({});
   const [logoUrls, setLogoUrls] = useState({});
+  const [prevSymbols, setPrevSymbols] = useState([]);
 
   const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
@@ -118,6 +119,9 @@ const StockTracker = () => {
   useEffect(() => {
     if (companiesInWatchList && socket) {
       const symbols = companiesInWatchList.map((company) => company.symbol);
+
+      // Mettre à jour la liste de symboles précédents
+      setPrevSymbols(symbols);
 
       socket.addEventListener("error", function (event) {
         console.error("WebSocket error:", event);

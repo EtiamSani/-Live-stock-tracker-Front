@@ -6,19 +6,41 @@ const WebSocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [tradeData, setTradeData] = useState({});
+  const [watchList, setWatchList] = useState([]);
+  const [prevWatchList, setPrevWatchList] = useState([]);
   const base_url =
     "wss://ws.finnhub.io?token=cgc550hr01qsquh3egv0cgc550hr01qsquh3egvg";
+
+  useEffect(() => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      // Se désabonner de chaque symbole de l'ancienne watchList
+      prevWatchList.forEach((symbol) => {
+        socket.send(JSON.stringify({ type: "unsubscribe", symbol: symbol }));
+      });
+
+      // S'abonner à chaque symbole de la nouvelle watchList
+      watchList.forEach((symbol) => {
+        socket.send(JSON.stringify({ type: "subscribe", symbol: symbol }));
+      });
+
+      // Mettre à jour la liste de surveillance précédente
+      setPrevWatchList(watchList);
+    }
+  }, [watchList, prevWatchList]); // Se déclenche chaque fois que watchList change
 
   useEffect(() => {
     const newSocket = new WebSocket(base_url);
 
     newSocket.addEventListener("open", function (event) {
-      setIsConnected(true); // Le WebSocket est maintenant connecté
-      fetchSymbols(newSocket);
+      setIsConnected(true);
+      // S'abonner à chaque symbole dans la watchList initiale
+      watchList.forEach((symbol) => {
+        newSocket.send(JSON.stringify({ type: "subscribe", symbol: symbol }));
+      });
     });
 
     newSocket.addEventListener("close", function (event) {
-      setIsConnected(false); // Le WebSocket est maintenant déconnecté
+      setIsConnected(false);
     });
 
     newSocket.addEventListener("message", function (event) {
@@ -40,20 +62,6 @@ const WebSocketProvider = ({ children }) => {
       newSocket.close();
     };
   }, []);
-
-  const fetchSymbols = async (socket) => {
-    try {
-      // Récupérer la liste de surveillance depuis votre backend
-      const watchlist = await fetchWatchList();
-      const symbols = watchlist.map((company) => company.symbol);
-
-      symbols.forEach((symbol) => {
-        socket.send(JSON.stringify({ type: "subscribe", symbol }));
-      });
-    } catch (error) {
-      console.error("Error fetching watchlist", error);
-    }
-  };
 
   return (
     <WebSocketContext.Provider value={{ tradeData, isConnected, socket }}>
