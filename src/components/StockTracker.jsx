@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import TableHeader from "./TableHeader";
 import CompanyBadge from "./CompanyBadge";
 import WebSocketContext from "../APIServices/webSocketContext";
+import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
 
 const StockTracker = () => {
@@ -108,41 +109,75 @@ const StockTracker = () => {
     }
   };
 
-  const socket = useContext(WebSocketContext);
+  const {
+    tradeData: contextTradeData,
+    isConnected,
+    socket,
+  } = useContext(WebSocketContext);
 
   useEffect(() => {
     if (companiesInWatchList && socket) {
       const symbols = companiesInWatchList.map((company) => company.symbol);
 
-      symbols.forEach((symbol) => {
-        const message = JSON.stringify({ type: "subscribe", symbol });
-        socket.send(message);
+      socket.addEventListener("error", function (event) {
+        console.error("WebSocket error:", event);
       });
 
       const handleTrade = (event) => {
         const trade = JSON.parse(event.data);
-        console.log("Trade data:", trade.data[0]);
-        setTradeData((prevTradeData) => ({
-          ...prevTradeData,
-          [trade.data[0].s]: trade.data[0].p,
-        }));
+
+        if (trade && trade.data && trade.data[0]) {
+          console.log("Trade data:", trade.data[0]);
+          setTradeData((prevTradeData) => ({
+            ...prevTradeData,
+            [trade.data[0].s]: trade.data[0].p,
+          }));
+        } else {
+          console.error("Received malformed data:", trade);
+        }
       };
 
-      socket.addEventListener("open", () => {
+      const sendWebSocketMessage = (message) => {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(message);
+        } else {
+          console.error(
+            "WebSocket connection is not open. Waiting for connection..."
+          );
+          setTimeout(() => {
+            sendWebSocketMessage(message);
+          }, 1000); // Réessaie après 1 seconde
+        }
+      };
+
+      const handleOpen = () => {
+        console.log("WebSocket connection established. Sending messages...");
         symbols.forEach((symbol) => {
           const message = JSON.stringify({ type: "subscribe", symbol });
-          socket.send(message);
+          sendWebSocketMessage(message);
         });
-      });
+      };
 
+      const handleClose = () => {
+        console.error(
+          "WebSocket connection closed unexpectedly. Reconnecting..."
+        );
+        // Ici, vous pouvez implémenter une logique de reconnexion si la connexion WebSocket se ferme de manière inattendue
+        // Par exemple, vous pouvez essayer de rétablir la connexion après un certain délai
+      };
+
+      socket.addEventListener("open", handleOpen);
       socket.addEventListener("message", handleTrade);
+      socket.addEventListener("close", handleClose);
 
       return () => {
         symbols.forEach((symbol) => {
           const message = JSON.stringify({ type: "unsubscribe", symbol });
           socket.send(message);
         });
+        socket.removeEventListener("open", handleOpen);
         socket.removeEventListener("message", handleTrade);
+        socket.removeEventListener("close", handleClose);
       };
     }
   }, [companiesInWatchList, socket]);
@@ -158,11 +193,9 @@ const StockTracker = () => {
         setLogoUrls(urls);
       } catch (error) {
         console.error("Failed to fetch company logos:", error);
-        // En cas d'erreur, vous pouvez définir un URL d'image de remplacement
-        const defaultUrl = "/chemin/vers/image-de-remplacement.png";
         const urls = {};
         for (const company of companiesInWatchList) {
-          urls[company.symbol] = defaultUrl;
+          urls[company.symbol] = null; // Utilisez null pour indiquer que le logo n'est pas disponible
         }
         setLogoUrls(urls);
       }
@@ -256,7 +289,11 @@ const CompanyRow = ({
         <div className="flex items-center space-x-3">
           <div className="avatar">
             <div className="h-11 w-11 rounded-full">
-              <img src={logoUrl} alt="Avatar Tailwind CSS Component" />
+              {logoUrl ? (
+                <img src={logoUrl} alt="Company Logo" />
+              ) : (
+                generateLogoPlaceholder(company.symbol)
+              )}
             </div>
           </div>
           <div>
