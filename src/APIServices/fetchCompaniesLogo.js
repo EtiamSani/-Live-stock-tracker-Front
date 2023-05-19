@@ -4,7 +4,6 @@ const fetchCompaniesLogo = async (symbol) => {
       `http://localhost:3000/tickersearch/logo/${symbol}`
     );
     const data = await response.json();
-    console.log(data.logo);
     return data.logo;
   } catch (error) {
     console.error("Failed to fetch company logo:", error);

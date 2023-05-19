@@ -12,6 +12,7 @@ import CompanyBadge from "./CompanyBadge";
 import WebSocketContext from "../APIServices/webSocketContext";
 import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
+import { fetchClosePrice } from "../APIServices/fetchClosePrice";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
@@ -127,15 +128,19 @@ const StockTracker = () => {
         console.error("WebSocket error:", event);
       });
 
-      const handleTrade = (event) => {
+      const handleTrade = async (event) => {
         const trade = JSON.parse(event.data);
 
-        if (trade && trade.data && trade.data[0]) {
+        if (trade && trade.data && trade.data[0] && trade.type !== "ping") {
           console.log("Trade data:", trade.data[0]);
+          const symbol = trade.data[0].s;
+          // const closePriceData = await fetchClosePrice(symbol);
+          // console.log("Close price data:", closePriceData);
           setTradeData((prevTradeData) => ({
             ...prevTradeData,
             [trade.data[0].s]: trade.data[0].p,
           }));
+          // console.log(trade.data[0].p);
         } else {
           console.error("Received malformed data:", trade);
         }
