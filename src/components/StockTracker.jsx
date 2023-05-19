@@ -187,6 +187,44 @@ const StockTracker = () => {
   }, [companiesInWatchList, socket]);
 
   useEffect(() => {
+    if (companiesInWatchList && socket) {
+      const symbols = companiesInWatchList.map((company) => company.symbol);
+
+      const newSymbols = symbols.filter(
+        (symbol) => !prevSymbols.includes(symbol)
+      );
+      const oldSymbols = prevSymbols.filter(
+        (symbol) => !symbols.includes(symbol)
+      );
+
+      const sendWebSocketMessage = (type, symbol) => {
+        const message = JSON.stringify({ type, symbol });
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(message);
+        } else {
+          console.error(
+            `WebSocket connection is not open. Waiting for connection to send ${type} message for ${symbol}...`
+          );
+          setTimeout(() => {
+            sendWebSocketMessage(type, symbol);
+          }, 1000); // Retry after 1 second
+        }
+      };
+
+      oldSymbols.forEach((symbol) => {
+        sendWebSocketMessage("unsubscribe", symbol);
+      });
+
+      newSymbols.forEach((symbol) => {
+        sendWebSocketMessage("subscribe", symbol);
+      });
+
+      // Update the list of previous symbols
+      setPrevSymbols(symbols);
+    }
+  }, [companiesInWatchList, socket]);
+
+  useEffect(() => {
     const fetchLogoUrls = async () => {
       try {
         const urls = {};

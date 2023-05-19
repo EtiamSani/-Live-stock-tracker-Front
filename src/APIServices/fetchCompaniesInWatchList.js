@@ -1,6 +1,6 @@
-const fetchCompaniesInWatchLists = async ({ queryKey }) => {
+const fetchCompaniesInWatchLists = async () => {
   const selectedId = localStorage.getItem("selectedId");
-  const id = queryKey[1];
+
   const apiRes = await fetch(`http://localhost:3000/watchlist/${selectedId}`);
 
   if (!apiRes.ok) {

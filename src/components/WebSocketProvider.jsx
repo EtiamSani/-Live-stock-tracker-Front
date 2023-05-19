@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import WebSocketContext from "../APIServices/webSocketContext";
 import fetchWatchList from "../APIServices/fetchWatchLists";
 
-const WebSocketProvider = ({ children }) => {
+const WebSocketProvider = ({ children, currentWatchList }) => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [tradeData, setTradeData] = useState({});
@@ -26,7 +26,7 @@ const WebSocketProvider = ({ children }) => {
       // Mettre à jour la liste de surveillance précédente
       setPrevWatchList(watchList);
     }
-  }, [watchList, prevWatchList]); // Se déclenche chaque fois que watchList change
+  }, [currentWatchList, prevWatchList]); // Se déclenche chaque fois que watchList change
 
   useEffect(() => {
     const newSocket = new WebSocket(base_url);
