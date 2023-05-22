@@ -1,8 +1,7 @@
 [![GitHub commits](https://badgen.net/github/commits/etiamsani/Live-stock-tracker-backend)](https://GitHub.com/EtiamSani/Live-stock-tracker-frontend/commit/)
 [![GitHub latest commit](https://badgen.net/github/last-commit/EtiamSani/Live-stock-tracker-backend)](https://GitHub.com/EtiamSani/Live-stock-tracker-frontend/commit/)
 
-# Smart stocktracker frontend
-
+# Smart stocktracker frontend (in progress)
 
 ## Language, framworks and tools used in this project 
 
