@@ -171,8 +171,6 @@ const StockTracker = () => {
         console.error(
           "WebSocket connection closed unexpectedly. Reconnecting..."
         );
-        // Ici, vous pouvez implémenter une logique de reconnexion si la connexion WebSocket se ferme de manière inattendue
-        // Par exemple, vous pouvez essayer de rétablir la connexion après un certain délai
       };
 
       socket.addEventListener("open", handleOpen);
