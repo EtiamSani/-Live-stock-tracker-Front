@@ -272,6 +272,7 @@ const StockTracker = () => {
                 item={item}
                 handleClick={handleEditClick}
                 refetch={refetch}
+                onDelete={() => handleDelete(item.id)}
               />
             ))
           )}

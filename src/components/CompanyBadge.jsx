@@ -3,7 +3,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import fetchWatchLists from "../APIServices/fetchWatchLists";
 
-const CompanyBadge = ({ item, handleClick, refetch }) => {
+const CompanyBadge = ({ item, handleClick, refetch, onDelete }) => {
   const [selectedId, setSelectedId] = useState("");
   const [showIcons, setShowIcons] = useState(false); // Ajout d'un état pour afficher ou masquer les icônes
 
@@ -48,7 +48,8 @@ const CompanyBadge = ({ item, handleClick, refetch }) => {
         if (secondResponse.ok) {
           // Les deux suppressions sont terminées avec succès
           console.log("Suppression réussie");
-          refetch(["companiesInWatchlist", id]); // Rafraîchir l'interface utilisateur en appelant refetch()
+          refetch();
+          onDelete();
         } else {
           throw new Error(
             "Erreur lors de la suppression de la liste dans watchlist"
