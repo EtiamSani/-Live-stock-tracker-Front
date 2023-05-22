@@ -2,6 +2,8 @@
 [![GitHub latest commit](https://badgen.net/github/last-commit/EtiamSani/Live-stock-tracker-backend)](https://GitHub.com/EtiamSani/Live-stock-tracker-frontend/commit/)
 
 # Smart stocktracker frontend (in progress)
+## What is this app about ? 
+Smart StockTracker is an application designed to track the price of your preferred stocks. The unique feature of this app is that it allows you to enter the entry price for each stock. This enables you to quickly determine whether or not to add a particular stock to your portfolio at a glance
 
 ## Language, framworks and tools used in this project 
 
