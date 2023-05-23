@@ -23,6 +23,7 @@ const StockTracker = () => {
   const [tradeData, setTradeData] = useState({});
   const [logoUrls, setLogoUrls] = useState({});
   const [prevSymbols, setPrevSymbols] = useState([]);
+  const [deletedListId, setDeletedListId] = useState(() => {});
 
   const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
@@ -251,6 +252,20 @@ const StockTracker = () => {
     }
   }, [companiesInWatchList]);
 
+  const [watchlists, setWatchlists] = useState([]);
+
+  // ...
+
+  const updateWatchlists = (listId) => {
+    setWatchlists((prevWatchlists) =>
+      prevWatchlists.filter((item) => item.id !== listId)
+    );
+  };
+
+  useEffect(() => {
+    setDeletedListId(null); // Réinitialiser l'ID de la liste supprimée
+  }, [data]);
+
   return (
     <div className="flex items-center justify-center">
       <div className="m-auto">
@@ -266,15 +281,19 @@ const StockTracker = () => {
           ) : isError ? (
             <div>Error: {error.message}</div>
           ) : (
-            data.map((item, index) => (
-              <CompanyBadge
-                key={index}
-                item={item}
-                handleClick={handleEditClick}
-                refetch={refetch}
-                onDelete={() => handleDelete(item.id)}
-              />
-            ))
+            data
+              .filter((item) => item.id !== deletedListId) // Exclure la liste supprimée
+              .map((item, index) => (
+                <CompanyBadge
+                  key={index}
+                  item={item}
+                  handleClick={handleEditClick}
+                  refetch={refetch}
+                  onDelete={() => handleDelete(item.id, item.listId)}
+                  updateWatchlists={updateWatchlists}
+                  setDeletedListId={setDeletedListId}
+                />
+              ))
           )}
         </div>
 

@@ -3,9 +3,17 @@ import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import fetchWatchLists from "../APIServices/fetchWatchLists";
 
-const CompanyBadge = ({ item, handleClick, refetch, onDelete }) => {
+const CompanyBadge = ({
+  item,
+  handleClick,
+  refetch,
+  onDelete,
+  updateWatchlists,
+  setDeletedListId,
+}) => {
   const [selectedId, setSelectedId] = useState("");
   const [showIcons, setShowIcons] = useState(false); // Ajout d'un état pour afficher ou masquer les icônes
+  const [watchlists, setWatchlists] = useState([]);
 
   const handleOnClick = () => {
     const id = item.id;
@@ -13,6 +21,21 @@ const CompanyBadge = ({ item, handleClick, refetch, onDelete }) => {
     localStorage.setItem("selectedId", id);
     refetch(["companiesInWatchlist", id]);
     handleClick();
+  };
+
+  const handleUpdateWatchlists = async () => {
+    try {
+      await fetchWatchLists(); // Effectuer la requête API pour mettre à jour la liste de watchlists
+      updateWatchlists(item.id); // Mettre à jour les watchlists dans le composant parent
+    } catch (error) {
+      console.error("Error:", error);
+      // Gérer l'erreur et effectuer les actions nécessaires en cas d'échec
+    }
+  };
+
+  const handleUpdate = () => {
+    refetch("watchlist");
+    console.log("Watchlists mises à jour");
   };
 
   const handleDoubleClick = () => {
@@ -25,41 +48,41 @@ const CompanyBadge = ({ item, handleClick, refetch, onDelete }) => {
     // Ajoutez ici votre code pour gérer la modification
   };
 
-  const handleDelete = () => {
-    const id = localStorage.getItem("selectedId");
-    fetch(`http://localhost:3000/watchlist/deletewithcompanies/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        // Vérifier si la première suppression s'est effectuée avec succès
-        if (response.ok) {
-          // Effectuer la deuxième requête DELETE pour supprimer la liste dans la table "watchlist"
-          return fetch(`http://localhost:3000/watchlist/${id}`, {
-            method: "DELETE",
-          });
-        } else {
-          throw new Error(
-            "Erreur lors de la suppression des enregistrements dans watchlist_has_company"
-          );
+  const handleDelete = async (listId) => {
+    try {
+      const id = localStorage.getItem("selectedId");
+      const firstResponse = await fetch(
+        `http://localhost:3000/watchlist/deletewithcompanies/${id}`,
+        {
+          method: "DELETE",
         }
-      })
-      .then((secondResponse) => {
-        // Vérifier si la deuxième suppression s'est effectuée avec succès
+      );
+      await handleUpdateWatchlists();
+      if (firstResponse.ok) {
+        const secondResponse = await fetch(
+          `http://localhost:3000/watchlist/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
         if (secondResponse.ok) {
-          // Les deux suppressions sont terminées avec succès
           console.log("Suppression réussie");
-          refetch();
-          onDelete();
         } else {
           throw new Error(
             "Erreur lors de la suppression de la liste dans watchlist"
           );
         }
-      })
-      .catch((error) => {
-        console.error("Erreur :", error);
-        // Gérer l'erreur et effectuer les actions nécessaires en cas d'échec
-      });
+      } else {
+        throw new Error(
+          "Erreur lors de la suppression des enregistrements dans watchlist_has_company"
+        );
+      }
+      fetchWatchLists();
+    } catch (error) {
+      console.error("Erreur :", error);
+      // Gérer l'erreur et effectuer les actions nécessaires en cas d'échec
+    }
   };
 
   return (
