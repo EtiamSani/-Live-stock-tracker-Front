@@ -282,7 +282,7 @@ const StockTracker = () => {
           <SearchBar refetch={refetch} />
         </div>
         <div className="ml-2.5 flex flex-wrap">
-          <ListModal />
+          <ListModal refreshWatchlists={refreshWatchlists} />
         </div>
         <div>
           {isLoading ? (

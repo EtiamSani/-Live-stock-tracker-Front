@@ -1,6 +1,32 @@
+import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
 
-const ListModal = () => {
+const ListModal = ({ refreshWatchlists }) => {
+  const [newListName, setNewListName] = useState(""); // Ajouter un état pour stocker le nom de la nouvelle liste
+  const investorId = "1";
+
+  const handleInputChange = (event) => {
+    setNewListName(event.target.value);
+  };
+
+  const handleCreateList = async () => {
+    const response = await fetch("http://localhost:3000/watchlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newListName, investor_id: investorId }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la création de la nouvelle liste");
+    }
+
+    // Rafraîchir la liste des watchlists après la création réussie
+    refreshWatchlists();
+
+    // Réinitialiser le champ de saisie après la création réussie
+    setNewListName("");
+  };
+
   return (
     <div>
       <label htmlFor="my-modal" className="btn">
@@ -15,9 +41,15 @@ const ListModal = () => {
             type="text"
             placeholder="Le nom de ma liste"
             className="input-bordered input-primary input mt-3 w-full max-w-xs"
+            value={newListName} // Utiliser l'état newListName comme valeur
+            onChange={handleInputChange} // Mettre à jour l'état newListName lorsque l'utilisateur tape
           />
           <div className="modal-action">
-            <label htmlFor="my-modal" className="btn bg-green-500">
+            <label
+              htmlFor="my-modal"
+              className="btn bg-green-500"
+              onClick={handleCreateList}
+            >
               Créer ma liste
             </label>
             <label htmlFor="my-modal" className="btn bg-red-400">
