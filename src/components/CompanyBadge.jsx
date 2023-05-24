@@ -123,18 +123,21 @@ const CompanyBadge = ({
           <input
             value={updatedName}
             onChange={(e) => setUpdatedName(e.target.value)}
+            className="mr-3 w-20 p-1 outline outline-zinc-600"
           />
-          <button onClick={handleSave}>Submit</button>
+          <button className="btn-xs btn" onClick={handleSave}>
+            Valider
+          </button>
         </div>
       ) : (
         item.name
       )}
       {showIcons && (
         <div className="flex">
-          <span className="fapen-icon" onClick={handleEdit}>
-            <FaPencilAlt className="text-xs" />
+          <span className="btn-accent btn-xs btn ml-2" onClick={handleEdit}>
+            <FaPencilAlt />
           </span>
-          <span className="hover:bg-red-500" onClick={handleDelete}>
+          <span className="btn-warning btn-xs btn ml-2" onClick={handleDelete}>
             <RiDeleteBin7Line className="text-lg" />
           </span>
         </div>
