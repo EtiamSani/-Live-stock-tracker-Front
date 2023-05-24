@@ -102,7 +102,7 @@ const SearchBar = ({ refetch }) => {
           type="text"
           value={input}
           onChange={handleChange}
-          placeholder="Type here"
+          placeholder="Ticker..."
           className="input-bordered input-primary input w-full"
         />
         {loading ? (

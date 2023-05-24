@@ -385,8 +385,8 @@ const CompanyRow = ({
       <td className="font-extrabold">
         <div className="-mt-1">{tradeData}</div>
         <div className="flex text-xs">
-          <div className="-ml-3 font-bold">+20000</div>
-          <div className="ml-1 w-7 font-bold">+50%</div>
+          {/* <div className="-ml-3 font-bold">+20000</div>
+          <div className="ml-1 w-7 font-bold">+50%</div> */}
         </div>
       </td>
       <td className="-ml-2 mt-3 flex items-center justify-center p-0 text-xs font-semibold">

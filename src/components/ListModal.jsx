@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
 
 const ListModal = ({ refreshWatchlists }) => {
-  const [newListName, setNewListName] = useState(""); // Ajouter un état pour stocker le nom de la nouvelle liste
+  const [newListName, setNewListName] = useState(""); // état pour stocker le nom de la nouvelle liste
   const investorId = "1";
 
   const handleInputChange = (event) => {
@@ -41,7 +41,7 @@ const ListModal = ({ refreshWatchlists }) => {
             type="text"
             placeholder="Le nom de ma liste"
             className="input-bordered input-primary input mt-3 w-full max-w-xs"
-            value={newListName} // Utiliser l'état newListName comme valeur
+            value={newListName} // Utilisation de l'état newListName comme valeur
             onChange={handleInputChange} // Mettre à jour l'état newListName lorsque l'utilisateur tape
           />
           <div className="modal-action">
