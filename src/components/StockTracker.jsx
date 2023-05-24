@@ -270,9 +270,10 @@ const StockTracker = () => {
     );
   };
 
-  useEffect(() => {
-    setDeletedListId(null); // Réinitialiser l'ID de la liste supprimée
-  }, [data]);
+  const refreshWatchlists = async () => {
+    const updatedWatchlists = await fetchWatchLists();
+    setWatchlists(updatedWatchlists);
+  };
 
   return (
     <div className="flex items-center justify-center">
@@ -301,6 +302,7 @@ const StockTracker = () => {
                   updateWatchlists={updateWatchlists}
                   setDeletedListId={setDeletedListId}
                   setWatchlists={setWatchlists}
+                  refreshWatchlists={refreshWatchlists}
                 />
               ))
           )}

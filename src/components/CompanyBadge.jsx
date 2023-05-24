@@ -2,18 +2,23 @@ import { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import fetchWatchLists from "../APIServices/fetchWatchLists";
+import { useEffect } from "react";
 
 const CompanyBadge = ({
   item,
   handleClick,
   refetch,
-  onDelete,
   updateWatchlists,
-  setDeletedListId,
-  setWatchlists,
+  refreshWatchlists,
 }) => {
   const [selectedId, setSelectedId] = useState("");
   const [showIcons, setShowIcons] = useState(false); // Ajout d'un état pour afficher ou masquer les icônes
+  const [isEditing, setIsEditing] = useState(false); // State to toggle the input field
+  const [updatedName, setUpdatedName] = useState(""); // State to keep track of the updated name
+
+  useEffect(() => {
+    setUpdatedName(item.name);
+  }, [item.name]);
 
   const handleOnClick = () => {
     const id = item.id;
@@ -33,19 +38,41 @@ const CompanyBadge = ({
     }
   };
 
-  const handleUpdate = () => {
-    refetch("watchlist");
-    console.log("Watchlists mises à jour");
-  };
-
   const handleDoubleClick = () => {
     setShowIcons(true); // Afficher les icônes lors du double-clic
     setShowIcons(!showIcons); // Toggle the state to show or hide the icons
   };
 
   const handleEdit = () => {
-    // Logique pour l'action de modification
-    // Ajoutez ici votre code pour gérer la modification
+    // on pencil click, switch to editing mode
+    setIsEditing(true);
+    setUpdatedName(item.name); // initialize the updated name with the current name
+  };
+
+  const handleSave = async () => {
+    if (!isEditing) {
+      return;
+    }
+
+    // if already in editing mode, send the update request
+    const id = localStorage.getItem("selectedId");
+    const response = await fetch(`http://localhost:3000/watchlist/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: updatedName }),
+    });
+
+    // handle the response...
+    // if update was successful, exit the editing mode
+    if (response.ok) {
+      setIsEditing(false);
+      refreshWatchlists(); // Actualiser les watchlists
+      setShowIcons(false); // Cacher les icônes
+    } else {
+      throw new Error("Erreur lors de la mise à jour du nom de la watchlist");
+    }
   };
 
   const handleDelete = async (listId) => {
@@ -89,10 +116,20 @@ const CompanyBadge = ({
     <a
       className="badge-ghost badge badge-sm btn m-2 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black"
       onClick={handleOnClick}
-      onDoubleClick={handleDoubleClick} // Ajout de l'événement de double-clic
+      onDoubleClick={handleDoubleClick}
     >
-      {item.name}
-      {showIcons && ( // Affichage conditionnel des icônes
+      {isEditing && item.id === selectedId ? (
+        <div>
+          <input
+            value={updatedName}
+            onChange={(e) => setUpdatedName(e.target.value)}
+          />
+          <button onClick={handleSave}>Submit</button>
+        </div>
+      ) : (
+        item.name
+      )}
+      {showIcons && (
         <div className="flex">
           <span className="fapen-icon" onClick={handleEdit}>
             <FaPencilAlt className="text-xs" />
