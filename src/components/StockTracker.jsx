@@ -254,6 +254,14 @@ const StockTracker = () => {
 
   const [watchlists, setWatchlists] = useState([]);
 
+  useEffect(() => {
+    if (data) {
+      setWatchlists(data);
+    }
+  }, [data]);
+
+  console.log("Watchlist:", watchlists);
+
   // ...
 
   const updateWatchlists = (listId) => {
@@ -281,7 +289,7 @@ const StockTracker = () => {
           ) : isError ? (
             <div>Error: {error.message}</div>
           ) : (
-            data
+            watchlists
               .filter((item) => item.id !== deletedListId) // Exclure la liste supprimée
               .map((item, index) => (
                 <CompanyBadge
@@ -292,6 +300,7 @@ const StockTracker = () => {
                   onDelete={() => handleDelete(item.id, item.listId)}
                   updateWatchlists={updateWatchlists}
                   setDeletedListId={setDeletedListId}
+                  setWatchlists={setWatchlists}
                 />
               ))
           )}

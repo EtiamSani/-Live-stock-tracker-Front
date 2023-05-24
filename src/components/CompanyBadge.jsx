@@ -10,10 +10,10 @@ const CompanyBadge = ({
   onDelete,
   updateWatchlists,
   setDeletedListId,
+  setWatchlists,
 }) => {
   const [selectedId, setSelectedId] = useState("");
   const [showIcons, setShowIcons] = useState(false); // Ajout d'un état pour afficher ou masquer les icônes
-  const [watchlists, setWatchlists] = useState([]);
 
   const handleOnClick = () => {
     const id = item.id;
