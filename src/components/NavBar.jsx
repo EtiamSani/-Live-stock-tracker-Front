@@ -30,6 +30,15 @@ const NavBar = () => {
       }
     }
   }, []);
+
+  const handleLogout = () => {
+    // Supprimer le token du localStorage
+    localStorage.removeItem("token");
+
+    // Recharger la page pour revenir à la page de connexion
+    window.location.href = "/login";
+  };
+
   return (
     <div className="navbar w-full min-w-full bg-blue-100 ">
       <div className="flex-1 items-center justify-between ">
@@ -72,7 +81,7 @@ const NavBar = () => {
             <li>
               <a>Mon compte</a>
             </li>
-            <li>
+            <li onClick={handleLogout}>
               <a>Se déconnecter</a>
             </li>
           </ul>
@@ -93,9 +102,13 @@ const NavBar = () => {
       </ul>
       <ul className="menu menu-horizontal px-1">
         <li>
-          <Link to="/login" className="btn hidden  lg:block">
+          <a
+            to="/login"
+            className="btn hidden  lg:block"
+            onClick={handleLogout}
+          >
             <p className="mt-1 text-white">Déconnection</p>
-          </Link>
+          </a>
         </li>
       </ul>
     </div>

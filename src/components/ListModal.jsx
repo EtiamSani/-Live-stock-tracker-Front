@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
+import jwt_decode from "jwt-decode";
 
 const ListModal = ({ refreshWatchlists }) => {
   const [newListName, setNewListName] = useState(""); // état pour stocker le nom de la nouvelle liste
-  const investorId = "1";
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("Token not found");
+  }
+
+  const decodedToken = jwt_decode(token);
+  const investorId = decodedToken.data.id;
 
   const handleInputChange = (event) => {
     setNewListName(event.target.value);
