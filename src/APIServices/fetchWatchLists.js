@@ -1,5 +1,20 @@
+import jwt_decode from "jwt-decode";
+
 const fetchWatchLists = async () => {
-  const apiRes = await fetch("http://localhost:3000/watchlist/investor/1");
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("Token not found");
+  }
+
+  const decodedToken = jwt_decode(token);
+  const investorId = decodedToken.data.id;
+
+  console.log("yaaaaaaaaa", decodedToken);
+
+  const apiRes = await fetch(
+    `http://localhost:3000/watchlist/investor/${investorId}`
+  );
 
   if (!apiRes.ok) {
     throw new Error("fetch not ok");

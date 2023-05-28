@@ -1,8 +1,35 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
 const NavBar = () => {
   const [isNavOpen, SetIsNavOpen] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState("");
+
+  useEffect(() => {
+    // Récupérer le token depuis localStorage
+    const token = localStorage.getItem("token");
+
+    // Vérifier si le token existe
+    if (token) {
+      try {
+        // Décoder le token pour obtenir les informations
+        const decodedToken = jwt_decode(token);
+        console.log(decodedToken);
+
+        // Vérifier si le décodage a réussi
+        if (decodedToken) {
+          // Récupérer le chemin de la photo de profil depuis les informations du token
+          const photoPath = `http://localhost:3000/${decodedToken.data.profilpicture}`;
+
+          // Mettre à jour l'état avec le chemin de la photo de profil
+          setProfilePhoto(photoPath);
+        }
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+      }
+    }
+  }, []);
   return (
     <div className="navbar w-full min-w-full bg-blue-100 ">
       <div className="flex-1 items-center justify-between ">
@@ -51,9 +78,10 @@ const NavBar = () => {
           </ul>
         </button>
       </div>
+
       <div className="avatar">
         <div className="mask mask-squircle w-10">
-          <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          <img src={profilePhoto} alt="Profile" />
         </div>
       </div>
       <ul className="menu menu-horizontal px-1">
