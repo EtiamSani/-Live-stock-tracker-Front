@@ -10,7 +10,7 @@ const NavBar = () => {
           to="/"
           className="btn-ghost btn hidden text-xl normal-case lg:block"
         >
-          Smart Stock Tracker
+          <p className="mt-2">Smart Stock Tracker</p>
         </Link>
       </div>
       <div className="dropdown-end dropdown flex-none">
@@ -50,14 +50,26 @@ const NavBar = () => {
             </li>
           </ul>
         </button>
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link to="/login" className="glass btn hidden lg:block">
-              Me connecter
-            </Link>
-          </li>
-        </ul>
       </div>
+      <div className="avatar">
+        <div className="mask mask-squircle w-10">
+          <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        </div>
+      </div>
+      <ul className="menu menu-horizontal px-1">
+        <li>
+          <Link to="/login" className="glass btn hidden lg:block">
+            <p className="mt-1">Connection</p>
+          </Link>
+        </li>
+      </ul>
+      <ul className="menu menu-horizontal px-1">
+        <li>
+          <Link to="/login" className="btn hidden  lg:block">
+            <p className="mt-1 text-white">Déconnection</p>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };
