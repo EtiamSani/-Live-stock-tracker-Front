@@ -1,11 +1,12 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import LoginPage from "./components/LoginPage";
-import StockTracker from "./components/StockTracker";
+import LoginPage from "./pages/LoginPage";
+import StockTracker from "./pages/StockTracker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import WebSocketProvider from "./components/WebSocketProvider";
+import HomePage from "./pages/HomePage";
 import fetchCompaniesInWatchLists from "./APIServices/fetchCompaniesInWatchList";
 import { useState, useEffect } from "react";
 
@@ -33,6 +34,7 @@ const App = () => {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/watchlists" element={<StockTracker />} />
+              <Route path="/" element={<HomePage />} />
             </Routes>
           </div>
           <ReactQueryDevtools initialIsOpen={false} />

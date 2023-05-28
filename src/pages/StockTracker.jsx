@@ -1,14 +1,14 @@
 import { FaPencilAlt } from "react-icons/fa";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { useState, useContext, useEffect } from "react";
-import SearchBar from "./SearchBar";
-import ListModal from "./ListModal";
+import SearchBar from "../components/SearchBar";
+import ListModal from "../components/ListModal";
 import fetchWatchLists from "../APIServices/fetchWatchLists";
 import { useQuery } from "@tanstack/react-query";
 import fetchCompaniesInWatchLists from "../APIServices/fetchCompaniesInWatchList";
 import { useParams } from "react-router-dom";
-import TableHeader from "./TableHeader";
-import CompanyBadge from "./CompanyBadge";
+import TableHeader from "../components/TableHeader";
+import CompanyBadge from "../components/CompanyBadge";
 import WebSocketContext from "../APIServices/webSocketContext";
 import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
