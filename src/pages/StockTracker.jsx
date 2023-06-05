@@ -390,7 +390,7 @@ const CompanyRow = ({
       : formattedTradeData
       ? formattedTradeData
       : closePriceData
-      ? closePriceData.c // Replace 'c' with the actual property name you want to display
+      ? closePriceData.c
       : "";
 
   return (
