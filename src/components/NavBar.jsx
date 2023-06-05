@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -5,6 +6,7 @@ import jwt_decode from "jwt-decode";
 const NavBar = () => {
   const [isNavOpen, SetIsNavOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Nouvel état pour vérifier si l'utilisateur est connecté
 
   useEffect(() => {
     // Récupérer le token depuis localStorage
@@ -24,6 +26,7 @@ const NavBar = () => {
 
           // Mettre à jour l'état avec le chemin de la photo de profil
           setProfilePhoto(photoPath);
+          setIsLoggedIn(true); // Définir isLoggedIn sur true lorsque l'utilisateur est connecté
         }
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -88,29 +91,37 @@ const NavBar = () => {
         </button>
       </div>
 
-      <div className="avatar">
-        <div className="mask mask-squircle w-10">
-          <img src={profilePhoto} alt="Profile" />
+      {isLoggedIn && (
+        <div className="avatar">
+          <div className="mask mask-squircle w-10">
+            <img src={profilePhoto} alt="Profile" />
+          </div>
         </div>
-      </div>
-      <ul className="menu menu-horizontal px-1">
-        <li>
-          <Link to="/login" className="glass btn hidden lg:block">
-            <p className="mt-1">Connection</p>
-          </Link>
-        </li>
-      </ul>
-      <ul className="menu menu-horizontal px-1">
-        <li>
-          <a
-            to="/login"
-            className="btn hidden  lg:block"
-            onClick={handleLogout}
-          >
-            <p className="mt-1 text-white">Déconnection</p>
-          </a>
-        </li>
-      </ul>
+      )}
+
+      {!isLoggedIn && (
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <Link to="/login" className="glass btn hidden lg:block">
+              <p className="mt-1">Connexion</p>
+            </Link>
+          </li>
+        </ul>
+      )}
+
+      {isLoggedIn && (
+        <ul className="menu menu-horizontal px-1">
+          <li>
+            <a
+              to="/login"
+              className="btn hidden lg:block"
+              onClick={handleLogout}
+            >
+              <p className="mt-1 text-white">Déconnexion</p>
+            </a>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
