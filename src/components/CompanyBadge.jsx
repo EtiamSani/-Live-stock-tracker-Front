@@ -114,7 +114,7 @@ const CompanyBadge = ({
 
   return (
     <a
-      className="badge-ghost badge badge-sm btn m-2 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black"
+      className="badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black"
       onClick={handleOnClick}
       onDoubleClick={handleDoubleClick}
     >

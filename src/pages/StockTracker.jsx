@@ -315,7 +315,7 @@ const StockTracker = () => {
           )}
         </div>
 
-        <table className="table-compact mx-auto max-w-xl lg:table lg:w-96">
+        <table className="table-compact mx-auto max-w-xl shadow lg:table lg:w-96">
           <TableHeader />
           <tbody>
             {isCompaniesLoading ? (
@@ -409,7 +409,7 @@ const CompanyRow = ({
       <td className="-ml-2 mt-3 flex items-center justify-center p-0 text-xs font-semibold">
         {isEditing && editingCompanyId === company.id ? (
           <input
-            className="input-xs w-12 rounded-md"
+            className="input-xs mt-3 w-20 rounded-md"
             type="number"
             value={updatedPrice}
             onChange={handlePriceChange}
