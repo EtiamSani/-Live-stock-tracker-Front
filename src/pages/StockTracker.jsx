@@ -288,7 +288,10 @@ const StockTracker = () => {
         <div>
           {isLoading ? (
             <div>
-              <Lazy />
+              {Array.from({ length: 4 }).map((_, index) => {
+                console.log("Index:", index); // Ajouter le console.log ici
+                return <Lazy key={index} />;
+              })}
             </div>
           ) : isError ? (
             <div>Error: {error.message}</div>
