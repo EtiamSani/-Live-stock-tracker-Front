@@ -56,7 +56,20 @@ const NavBar = () => {
           <p className="mt-2">Smart Stock Tracker</p>
         </Link>
       </div>
-      <div className="dropdown-end dropdown flex-none">
+      {isLoggedIn && (
+        <div className="mr-5">
+          <p>Bonjour {username}</p>
+        </div>
+      )}
+
+      {isLoggedIn && (
+        <div className="avatar">
+          <div className="mask mask-squircle w-10">
+            <img src={profilePhoto} alt="Profile" />
+          </div>
+        </div>
+      )}
+      <div className="dropdown-end dropdown z-40 flex-none">
         <button
           className="btn-squared btn-ghost btn md:block lg:hidden"
           onClick={() => SetIsNavOpen((prev) => !prev)}
@@ -83,7 +96,10 @@ const NavBar = () => {
             }`}
           >
             <li>
-              <a>Page d'acceuil</a>
+              <Link to="/">Page d'acceuil</Link>
+            </li>
+            <li>
+              <Link to="/watchlists">Mes listes</Link>
             </li>
             <li>
               <a>Mon compte</a>
@@ -94,20 +110,6 @@ const NavBar = () => {
           </ul>
         </button>
       </div>
-
-      {isLoggedIn && (
-        <div className="mr-5">
-          <p>Bonjour {username}</p>
-        </div>
-      )}
-
-      {isLoggedIn && (
-        <div className="avatar">
-          <div className="mask mask-squircle w-10">
-            <img src={profilePhoto} alt="Profile" />
-          </div>
-        </div>
-      )}
 
       {!isLoggedIn && (
         <ul className="menu menu-horizontal px-1">
@@ -120,7 +122,7 @@ const NavBar = () => {
       )}
 
       {isLoggedIn && (
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal hidden px-1 lg:block">
           <li>
             <Link to="/watchlists">
               <p>Mes listes</p>
