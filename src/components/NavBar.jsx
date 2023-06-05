@@ -58,7 +58,9 @@ const NavBar = () => {
       </div>
       {isLoggedIn && (
         <div className="mr-5">
-          <p>Bonjour {username}</p>
+          <p>
+            Bonjour <span className="font-bold">{username}</span>
+          </p>
         </div>
       )}
 
@@ -124,7 +126,7 @@ const NavBar = () => {
       {isLoggedIn && (
         <ul className="menu menu-horizontal hidden px-1 lg:block">
           <li>
-            <Link to="/watchlists">
+            <Link to="/watchlists" className="mx-3">
               <p>Mes listes</p>
             </Link>
             <a
