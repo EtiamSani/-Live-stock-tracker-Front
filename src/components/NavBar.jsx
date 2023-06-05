@@ -7,6 +7,7 @@ const NavBar = () => {
   const [isNavOpen, SetIsNavOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Nouvel état pour vérifier si l'utilisateur est connecté
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     // Récupérer le token depuis localStorage
@@ -27,6 +28,9 @@ const NavBar = () => {
           // Mettre à jour l'état avec le chemin de la photo de profil
           setProfilePhoto(photoPath);
           setIsLoggedIn(true); // Définir isLoggedIn sur true lorsque l'utilisateur est connecté
+
+          const username = decodedToken.data.nickname;
+          setUsername(username);
         }
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -92,6 +96,12 @@ const NavBar = () => {
       </div>
 
       {isLoggedIn && (
+        <div className="mr-5">
+          <p>Bonjour {username}</p>
+        </div>
+      )}
+
+      {isLoggedIn && (
         <div className="avatar">
           <div className="mask mask-squircle w-10">
             <img src={profilePhoto} alt="Profile" />
@@ -112,6 +122,9 @@ const NavBar = () => {
       {isLoggedIn && (
         <ul className="menu menu-horizontal px-1">
           <li>
+            <Link to="/watchlists">
+              <p>Mes listes</p>
+            </Link>
             <a
               to="/login"
               className="btn hidden lg:block"
