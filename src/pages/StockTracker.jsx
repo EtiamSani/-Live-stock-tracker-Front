@@ -13,6 +13,7 @@ import WebSocketContext from "../APIServices/webSocketContext";
 import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
 import { fetchClosePrice } from "../APIServices/fetchClosePrice";
+import Lazy from "../components/LazyLoadingWatchlist";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
@@ -286,7 +287,9 @@ const StockTracker = () => {
         </div>
         <div>
           {isLoading ? (
-            <div>Loading...</div>
+            <div>
+              <Lazy />
+            </div>
           ) : isError ? (
             <div>Error: {error.message}</div>
           ) : (
