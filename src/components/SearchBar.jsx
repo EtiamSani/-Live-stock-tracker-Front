@@ -113,7 +113,7 @@ const SearchBar = ({ refetch }) => {
           </div>
         ) : (
           suggestions.length > 0 && (
-            <ul className="absolute z-10 w-full rounded-b border border-t-0 border-gray-300 bg-white">
+            <ul className="absolute z-20 w-full rounded-b border border-t-0 border-gray-300 bg-white">
               {suggestions.map((suggestion, i) => (
                 <li
                   key={suggestion.symbol}
