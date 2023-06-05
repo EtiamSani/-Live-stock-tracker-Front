@@ -315,7 +315,7 @@ const StockTracker = () => {
           )}
         </div>
 
-        <table className="table-compact max-w-xs lg:table lg:w-96">
+        <table className="table-compact mx-auto max-w-xl lg:table lg:w-96">
           <TableHeader />
           <tbody>
             {isCompaniesLoading ? (
@@ -375,6 +375,7 @@ const CompanyRow = ({
   handleDeleteCompany,
   isUpdating,
 }) => {
+  const formattedTradeData = tradeData ? tradeData.toFixed(2) : "";
   return (
     <tr key={company.id} className="border-b border-gray-200">
       <td>
@@ -390,7 +391,7 @@ const CompanyRow = ({
           </div>
           <div>
             <div className="text-xs font-bold">
-              <p className="w-24 overflow-hidden text-ellipsis whitespace-nowrap">
+              <p className="mt-4 w-24 overflow-hidden text-ellipsis whitespace-nowrap">
                 {company.name}
               </p>
             </div>
@@ -399,7 +400,7 @@ const CompanyRow = ({
         </div>
       </td>
       <td className="font-extrabold">
-        <div className="-mt-1">{tradeData}</div>
+        <div className="-mt-1 text-base">{formattedTradeData}</div>
         <div className="flex text-xs">
           {/* <div className="-ml-3 font-bold">+20000</div>
           <div className="ml-1 w-7 font-bold">+50%</div> */}
@@ -419,22 +420,22 @@ const CompanyRow = ({
           />
         ) : (
           <>
-            {company.entryprice}
+            <div className="mb-2.5 ml-2 text-base">{company.entryprice}</div>
             <span
-              className="btn-xs btn ml-1 p-0.5"
+              className="btn-ghost btn mb-1 ml-2 p-0 py-0 sm:btn-xs md:btn-xs lg:btn-lg"
               onClick={() => handleEditClick(company.id)}
             >
-              <FaPencilAlt className="text-xs" />
+              <FaPencilAlt className="text-xs lg:text-base" />
             </span>
           </>
         )}
       </td>
-      <th className="-ml-5 p-0">
+      <th className="-ml-0 p-0">
         <button
-          className="btn-ghost btn-sm btn p-0 hover:bg-red-300"
+          className="btn-ghost btn-sm btn p-0 sm:btn-xs md:btn-xs lg:btn-lg hover:bg-red-300"
           onClick={() => handleDeleteCompany(company.id)}
         >
-          <RiDeleteBin7Line className="text-lg" />
+          <RiDeleteBin7Line className="text-xs lg:text-lg" />
         </button>
       </th>
     </tr>
