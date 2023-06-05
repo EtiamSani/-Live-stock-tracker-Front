@@ -375,7 +375,24 @@ const CompanyRow = ({
   handleDeleteCompany,
   isUpdating,
 }) => {
+  const { data: closePriceData } = useQuery(
+    ["closePrice", company.symbol],
+    () => fetchClosePrice(company.symbol),
+    {
+      enabled: !isEditing || (isEditing && editingCompanyId === company.id),
+    }
+  );
+
   const formattedTradeData = tradeData ? tradeData.toFixed(2) : "";
+  const displayPrice =
+    isEditing && editingCompanyId === company.id
+      ? updatedPrice
+      : formattedTradeData
+      ? formattedTradeData
+      : closePriceData
+      ? closePriceData.c // Replace 'c' with the actual property name you want to display
+      : "";
+
   return (
     <tr key={company.id} className="border-b border-gray-200">
       <td>
@@ -400,7 +417,7 @@ const CompanyRow = ({
         </div>
       </td>
       <td className="font-extrabold">
-        <div className="-mt-1 text-base">{formattedTradeData}</div>
+        <div className="-mt-1 text-base">{displayPrice}</div>
         <div className="flex text-xs">
           {/* <div className="-ml-3 font-bold">+20000</div>
           <div className="ml-1 w-7 font-bold">+50%</div> */}
