@@ -14,6 +14,8 @@ import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
 import { fetchClosePrice } from "../APIServices/fetchClosePrice";
 import Lazy from "../components/LazyLoadingWatchlist";
+import LazyCompanyLogo from "../components/LazyLoadingCompaniesLogo";
+import LazyCompanyName from "../components/LazyLoadingCompanyName";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
@@ -289,7 +291,6 @@ const StockTracker = () => {
           {isLoading ? (
             <div>
               {Array.from({ length: 4 }).map((_, index) => {
-                console.log("Index:", index); // Ajouter le console.log ici
                 return <Lazy key={index} />;
               })}
             </div>
@@ -318,9 +319,18 @@ const StockTracker = () => {
           <TableHeader />
           <tbody>
             {isCompaniesLoading ? (
-              <tr>
-                <td>Loading...</td>
-              </tr>
+              <>
+                {[...Array(4)].map((_, index) => (
+                  <tr key={index}>
+                    <td>
+                      <LazyCompanyLogo />
+                    </td>
+                    <td>
+                      <LazyCompanyName />
+                    </td>
+                  </tr>
+                ))}
+              </>
             ) : isCompaniesError ? (
               <tr>
                 <td>Error: {companiesError.message}</td>
