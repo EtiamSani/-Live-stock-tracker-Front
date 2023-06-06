@@ -67,7 +67,11 @@ const NavBar = () => {
       {isLoggedIn && (
         <div className="avatar">
           <div className="mask mask-squircle w-10">
-            <img src={profilePhoto} alt="Profile" />
+            <Link to="/mon-compte">
+              <div className="mask mask-squircle w-10">
+                <img src={profilePhoto} alt="Profile" />
+              </div>
+            </Link>
           </div>
         </div>
       )}
@@ -104,7 +108,7 @@ const NavBar = () => {
               <Link to="/watchlists">Mes listes</Link>
             </li>
             <li>
-              <a>Mon compte</a>
+              <Link to="/mon-compte">Mon compte</Link>
             </li>
             <li onClick={handleLogout}>
               <a>Se déconnecter</a>

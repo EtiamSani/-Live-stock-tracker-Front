@@ -9,6 +9,7 @@ import WebSocketProvider from "./components/WebSocketProvider";
 import HomePage from "./pages/HomePage";
 import fetchCompaniesInWatchLists from "./APIServices/fetchCompaniesInWatchList";
 import { useState, useEffect } from "react";
+import PersonalInformationPage from "./pages/PersonalInformationPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/watchlists" element={<StockTracker />} />
               <Route path="/" element={<HomePage />} />
+              <Route path="/mon-compte" element={<PersonalInformationPage />} />
             </Routes>
           </div>
           <ReactQueryDevtools initialIsOpen={false} />
