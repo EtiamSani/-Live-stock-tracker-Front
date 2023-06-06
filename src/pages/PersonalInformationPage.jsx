@@ -105,7 +105,7 @@ const PersonalInformationPage = () => {
               type="submit"
               className="btn-primary btn mx-auto mb-5 mt-4 block"
             >
-              Save
+              Sauvegarder
             </button>
           </form>
         </div>
