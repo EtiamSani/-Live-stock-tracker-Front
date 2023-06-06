@@ -7,6 +7,7 @@ const PersonalInformationPage = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [profilpicture, setProfilePhoto] = useState("");
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
@@ -83,6 +84,11 @@ const PersonalInformationPage = () => {
         setNickname("");
         setEmail("");
         setPassword("");
+        setIsUpdated(true);
+
+        // Mettre à jour les informations dans le stockage local
+        localStorage.setItem("nickname", nickname);
+        localStorage.setItem("email", email);
       })
       .catch((error) => {
         console.error("Failed to update data:", error);
@@ -100,6 +106,10 @@ const PersonalInformationPage = () => {
 
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    setIsUpdated(false);
+  }, []);
 
   return (
     <div className="m-0 ">
@@ -143,6 +153,11 @@ const PersonalInformationPage = () => {
                 onChange={handlePasswordChange}
               />
             </div>
+            {isUpdated && (
+              <p className="text-green-500">
+                Informations mises à jour avec succès
+              </p>
+            )}
             <button
               type="submit"
               className="btn-primary btn mx-auto mb-5 mt-4 block"
