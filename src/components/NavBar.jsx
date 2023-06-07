@@ -65,7 +65,7 @@ const NavBar = () => {
       )}
 
       {isLoggedIn && (
-        <div className="avatar">
+        <div className="avatar mt-3">
           <div className="mask mask-squircle w-10">
             <Link to="/mon-compte">
               <div className="mask mask-squircle w-10">
