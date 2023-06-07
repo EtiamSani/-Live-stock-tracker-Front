@@ -22,7 +22,7 @@ const StockTracker = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);
-  const [updatedPrice, setUpdatedPrice] = useState(0);
+  const [updatedEntryPrice, setUpdatedPrice] = useState(0);
   const [tradeData, setTradeData] = useState({});
   const [logoUrls, setLogoUrls] = useState({});
   const [prevSymbols, setPrevSymbols] = useState([]);
@@ -69,7 +69,7 @@ const StockTracker = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ entryprice: updatedPrice }),
+        body: JSON.stringify({ entryprice: updatedEntryPrice }),
       });
 
       if (!response.ok) {
@@ -344,7 +344,7 @@ const StockTracker = () => {
                   tradeData={tradeData[company.symbol]}
                   isEditing={isEditing}
                   editingCompanyId={editingCompanyId}
-                  updatedPrice={updatedPrice}
+                  updatedEntryPrice={updatedEntryPrice}
                   handlePriceChange={handlePriceChange}
                   handlePriceSubmit={handlePriceSubmit}
                   handleKeyDown={handleKeyDown}
@@ -368,6 +368,7 @@ const CompanyRow = ({
   isEditing,
   editingCompanyId,
   updatedPrice,
+  updatedEntryPrice,
   handlePriceChange,
   handlePriceSubmit,
   handleKeyDown,
@@ -428,7 +429,7 @@ const CompanyRow = ({
           <input
             className="input-xs mt-3 w-20 rounded-md"
             type="number"
-            value={updatedPrice}
+            value={updatedEntryPrice}
             onChange={handlePriceChange}
             onBlur={handlePriceSubmit}
             onKeyDown={handleKeyDown}
