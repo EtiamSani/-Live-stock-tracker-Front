@@ -443,7 +443,9 @@ const CompanyRow = ({
           />
         ) : (
           <>
-            <div className="mb-2 ml-2 text-base">{company.entryprice}</div>
+            <div className="ml-2 text-base sm:mb-1 lg:mb-2">
+              {company.entryprice}
+            </div>
             <span
               className="btn-ghost btn mb-1 ml-2 p-0 py-0 sm:btn-xs md:btn-xs lg:btn-lg"
               onClick={() => handleEditClick(company.id)}

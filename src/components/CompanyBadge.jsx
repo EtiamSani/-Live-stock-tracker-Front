@@ -119,7 +119,7 @@ const CompanyBadge = ({
 
   return (
     <a
-      className={`badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-cyan-400 hover:text-black ${
+      className={`badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:bg-cyan-400 ${
         selectedId === item.id ? "bg-cyan-200" : ""
       }`}
       onClick={handleOnClick}
