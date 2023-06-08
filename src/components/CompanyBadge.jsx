@@ -23,9 +23,9 @@ const CompanyBadge = ({
 
   const handleOnClick = () => {
     const id = item.id;
-    const previouslySelectedButton = document.querySelector(".bg-black");
+    const previouslySelectedButton = document.querySelector(".bg-cyan-200");
     if (previouslySelectedButton) {
-      previouslySelectedButton.classList.remove("bg-black");
+      previouslySelectedButton.classList.remove("bg-cyan-200");
     }
     setSelectedId(id);
     localStorage.setItem("selectedId", id);
@@ -119,8 +119,8 @@ const CompanyBadge = ({
 
   return (
     <a
-      className={`badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black ${
-        selectedId === item.id ? "bg-black" : "bg-transparent"
+      className={`badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-cyan-400 hover:text-black ${
+        selectedId === item.id ? "bg-cyan-200" : ""
       }`}
       onClick={handleOnClick}
       onDoubleClick={handleDoubleClick}
