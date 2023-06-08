@@ -387,7 +387,7 @@ const CompanyRow = ({
   const formattedTradeData = tradeData ? tradeData.toFixed(2) : "";
   const displayPrice =
     isEditing && editingCompanyId === company.id
-      ? updatedPrice
+      ? formattedTradeData
       : formattedTradeData
       ? formattedTradeData
       : closePriceData
@@ -438,7 +438,7 @@ const CompanyRow = ({
           />
         ) : (
           <>
-            <div className="mb-2.5 ml-2 text-base">{company.entryprice}</div>
+            <div className="mb-3 ml-2 text-base">{company.entryprice}</div>
             <span
               className="btn-ghost btn mb-1 ml-2 p-0 py-0 sm:btn-xs md:btn-xs lg:btn-lg"
               onClick={() => handleEditClick(company.id)}
