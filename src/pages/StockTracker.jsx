@@ -429,7 +429,7 @@ const CompanyRow = ({
           <div className="ml-1 w-7 font-bold">+50%</div> */}
         </div>
       </td>
-      <td className="-ml-2 mt-3 flex items-center justify-center p-0 text-xs font-semibold">
+      <td className="-ml-2 mt-1.5 flex items-center justify-center p-0 text-xs font-semibold">
         {isEditing && editingCompanyId === company.id ? (
           <input
             className="input-xs mt-3 w-20 rounded-md"
@@ -443,7 +443,7 @@ const CompanyRow = ({
           />
         ) : (
           <>
-            <div className="mb-3 ml-2 text-base">{company.entryprice}</div>
+            <div className="mb-2 ml-2 text-base">{company.entryprice}</div>
             <span
               className="btn-ghost btn mb-1 ml-2 p-0 py-0 sm:btn-xs md:btn-xs lg:btn-lg"
               onClick={() => handleEditClick(company.id)}
