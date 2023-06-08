@@ -27,6 +27,7 @@ const StockTracker = () => {
   const [logoUrls, setLogoUrls] = useState({});
   const [prevSymbols, setPrevSymbols] = useState([]);
   const [deletedListId, setDeletedListId] = useState(() => {});
+  const [isWebSocketConnected, setIsWebSocketConnected] = useState(false);
 
   const { data, error, isLoading, isError } = useQuery(
     ["watchlist"],
@@ -79,6 +80,9 @@ const StockTracker = () => {
       setEditingCompanyId(null);
       setIsEditing(false);
       await refetch();
+      if (!isWebSocketConnected) {
+        await refetch();
+      }
 
       const updatedCompany = companiesInWatchList.find(
         (company) => company.id === editingCompanyId
@@ -164,6 +168,7 @@ const StockTracker = () => {
       };
 
       const handleOpen = () => {
+        setIsWebSocketConnected(true);
         console.log("WebSocket connection established. Sending messages...");
         symbols.forEach((symbol) => {
           const message = JSON.stringify({ type: "subscribe", symbol });
@@ -172,9 +177,13 @@ const StockTracker = () => {
       };
 
       const handleClose = () => {
+        setIsWebSocketConnected(false);
         console.error(
           "WebSocket connection closed unexpectedly. Reconnecting..."
         );
+        symbols.forEach((symbol) => {
+          sendWebSocketMessage("subscribe", symbol);
+        });
       };
 
       socket.addEventListener("open", handleOpen);
@@ -388,11 +397,7 @@ const CompanyRow = ({
   const displayPrice =
     isEditing && editingCompanyId === company.id
       ? formattedTradeData
-      : formattedTradeData
-      ? formattedTradeData
-      : closePriceData
-      ? closePriceData.c
-      : "";
+      : formattedTradeData || (closePriceData && closePriceData.c) || "";
 
   return (
     <tr key={company.id} className="border-b border-gray-200">
