@@ -15,6 +15,7 @@ const CompanyBadge = ({
   const [showIcons, setShowIcons] = useState(false); // Ajout d'un état pour afficher ou masquer les icônes
   const [isEditing, setIsEditing] = useState(false); // State to toggle the input field
   const [updatedName, setUpdatedName] = useState(""); // State to keep track of the updated name
+  const [lastClickedId, setLastClickedId] = useState(null);
 
   useEffect(() => {
     setUpdatedName(item.name);
@@ -22,6 +23,10 @@ const CompanyBadge = ({
 
   const handleOnClick = () => {
     const id = item.id;
+    const previouslySelectedButton = document.querySelector(".bg-black");
+    if (previouslySelectedButton) {
+      previouslySelectedButton.classList.remove("bg-black");
+    }
     setSelectedId(id);
     localStorage.setItem("selectedId", id);
     refetch(["companiesInWatchlist", id]);
@@ -114,7 +119,9 @@ const CompanyBadge = ({
 
   return (
     <a
-      className="badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black"
+      className={`badge-ghost badge badge-sm btn m-2 my-5 p-2 font-bold hover:border-black hover:bg-transparent hover:text-black ${
+        selectedId === item.id ? "bg-black" : "bg-transparent"
+      }`}
       onClick={handleOnClick}
       onDoubleClick={handleDoubleClick}
     >
