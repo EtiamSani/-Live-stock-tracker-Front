@@ -1,7 +1,7 @@
 const Card = () => {
   return (
-    <div className="m-auto flex justify-center">
-      <div className="card m-10 w-96 bg-base-100 shadow-xl">
+    <div className="mb:flex-row m-auto flex flex-col justify-center lg:flex-row">
+      <div className="w-50 card m-10 bg-base-100 shadow-xl lg:w-96">
         <div className="card-body">
           <h2 className="card-title">Lorem, ipsum dolor.</h2>
           <p>
@@ -12,7 +12,7 @@ const Card = () => {
           </p>
         </div>
       </div>
-      <div className="card m-10 w-96 bg-base-100 shadow-xl">
+      <div className="w-50 card m-10 bg-base-100 shadow-xl lg:w-96">
         <div className="card-body">
           <h2 className="card-title">Lorem, ipsum dolor.</h2>
           <p>
@@ -23,7 +23,7 @@ const Card = () => {
           </p>
         </div>
       </div>
-      <div className="card m-10 w-96 bg-base-100 shadow-xl">
+      <div className="w-50 card m-10 bg-base-100 shadow-xl lg:w-96">
         <div className="card-body">
           <h2 className="card-title">Lorem, ipsum dolor.</h2>
           <p>
