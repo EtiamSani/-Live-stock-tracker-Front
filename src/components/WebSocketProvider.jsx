@@ -8,6 +8,8 @@ const WebSocketProvider = ({ children, currentWatchList }) => {
   const [tradeData, setTradeData] = useState({});
   const [watchList, setWatchList] = useState([]);
   const [prevWatchList, setPrevWatchList] = useState([]);
+  const isEditing = true; // Assign a value to isEditing
+
   const base_url =
     "wss://ws.finnhub.io?token=cgc550hr01qsquh3egv0cgc550hr01qsquh3egvg";
 
@@ -26,10 +28,11 @@ const WebSocketProvider = ({ children, currentWatchList }) => {
       // Mettre à jour la liste de surveillance précédente
       setPrevWatchList(watchList);
     }
-  }, [currentWatchList, prevWatchList]); // Se déclenche chaque fois que watchList change
+  }, [currentWatchList, prevWatchList, isEditing]); // Se déclenche chaque fois que watchList change
 
   useEffect(() => {
     const newSocket = new WebSocket(base_url);
+    setSocket(newSocket);
 
     newSocket.addEventListener("open", function (event) {
       setIsConnected(true);

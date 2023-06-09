@@ -22,7 +22,7 @@ const StockTracker = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);
-  const [updatedEntryPrice, setUpdatedPrice] = useState(0);
+  const [updatedEntryPrice, setUpdatedPrice] = useState("");
   const [tradeData, setTradeData] = useState({});
   const [logoUrls, setLogoUrls] = useState({});
   const [prevSymbols, setPrevSymbols] = useState([]);
@@ -80,9 +80,9 @@ const StockTracker = () => {
       setEditingCompanyId(null);
       setIsEditing(false);
       await refetch();
-      if (!isWebSocketConnected) {
-        await refetch();
-      }
+      // if (!isWebSocketConnected) {
+      //   await refetch();
+      // }
 
       const updatedCompany = companiesInWatchList.find(
         (company) => company.id === editingCompanyId
@@ -376,7 +376,6 @@ const CompanyRow = ({
   tradeData,
   isEditing,
   editingCompanyId,
-  updatedPrice,
   updatedEntryPrice,
   handlePriceChange,
   handlePriceSubmit,
