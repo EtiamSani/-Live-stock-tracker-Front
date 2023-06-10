@@ -53,9 +53,6 @@ const PersonalInformationPage = () => {
   }, []);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // Logique de traitement du formulaire ici (ex : appel à une API pour enregistrer les informations)
-
     // Créer un objet avec les données du formulaire
     const formData = {
       nickname,
