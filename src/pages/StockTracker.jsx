@@ -241,29 +241,29 @@ const StockTracker = () => {
     }
   }, [companiesInWatchList, socket]);
 
-  useEffect(() => {
-    const fetchLogoUrls = async () => {
-      try {
-        const urls = {};
-        for (const company of companiesInWatchList) {
-          const url = await fetchCompaniesLogo(company.symbol);
-          urls[company.symbol] = url;
-        }
-        setLogoUrls(urls);
-      } catch (error) {
-        console.error("Failed to fetch company logos:", error);
-        const urls = {};
-        for (const company of companiesInWatchList) {
-          urls[company.symbol] = null; // Utilisez null pour indiquer que le logo n'est pas disponible
-        }
-        setLogoUrls(urls);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchLogoUrls = async () => {
+  //     try {
+  //       const urls = {};
+  //       for (const company of companiesInWatchList) {
+  //         const url = await fetchCompaniesLogo(company.symbol);
+  //         urls[company.symbol] = url;
+  //       }
+  //       setLogoUrls(urls);
+  //     } catch (error) {
+  //       console.error("Failed to fetch company logos:", error);
+  //       const urls = {};
+  //       for (const company of companiesInWatchList) {
+  //         urls[company.symbol] = null; // Utilisez null pour indiquer que le logo n'est pas disponible
+  //       }
+  //       setLogoUrls(urls);
+  //     }
+  //   };
 
-    if (companiesInWatchList) {
-      fetchLogoUrls();
-    }
-  }, [companiesInWatchList]);
+  //   if (companiesInWatchList) {
+  //     fetchLogoUrls();
+  //   }
+  // }, [companiesInWatchList]);
 
   const [watchlists, setWatchlists] = useState([]);
 
@@ -405,8 +405,8 @@ const CompanyRow = ({
         <div className="flex items-center space-x-3">
           <div className="avatar">
             <div className="h-11 w-11 rounded-full">
-              {logoUrl ? (
-                <img src={logoUrl} alt="Company Logo" />
+              {company.logo ? (
+                <img src={company.logo} alt="Company Logo" />
               ) : (
                 generateLogoPlaceholder(company.symbol)
               )}

@@ -15,7 +15,8 @@ const SearchBar = ({ refetch }) => {
       setLoading(true);
       const response = await fetch(base_url + "/tickersearch/" + input);
       const result = await response.json();
-      setData(result.result); // Fetching the 'result' array from the response
+      console.log(result);
+      setData(result); // Fetching the 'result' array from the response
       setLoading(false);
     };
 
@@ -27,7 +28,7 @@ const SearchBar = ({ refetch }) => {
   useEffect(() => {
     if (input.length > 0) {
       const regex = new RegExp(`^${input}`, "i");
-      const matches = data.filter((v) => regex.test(v.displaySymbol));
+      const matches = data.filter((v) => regex.test(v.name));
       setSuggestions(matches);
     } else {
       setSuggestions([]);
@@ -45,10 +46,11 @@ const SearchBar = ({ refetch }) => {
 
     // Create a new object with the data to send
     const dataToSend = {
-      symbol: suggestion.displaySymbol,
-      name: suggestion.description,
+      symbol: suggestion.symbol,
+      name: suggestion.name,
+      logo: suggestion.logo,
     };
-    console.log(dataToSend);
+    console.log("datatosend", dataToSend);
 
     const selectedId = localStorage.getItem("selectedId");
     console.log(selectedId);
@@ -120,8 +122,16 @@ const SearchBar = ({ refetch }) => {
                   className="cursor-pointer p-2 hover:bg-gray-200"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
-                  {suggestion.displaySymbol} - {suggestion.description} -{" "}
-                  {suggestion.type}
+                  <div>
+                    <img
+                      src={suggestion.logo}
+                      alt={suggestion.name}
+                      className="h-8 w-8"
+                    />
+                  </div>
+                  <div>
+                    {suggestion.name} {suggestion.symbol}
+                  </div>
                 </li>
               ))}
             </ul>
