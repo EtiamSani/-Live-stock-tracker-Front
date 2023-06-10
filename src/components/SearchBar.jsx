@@ -122,15 +122,14 @@ const SearchBar = ({ refetch }) => {
                   className="cursor-pointer p-2 hover:bg-gray-200"
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
-                  <div>
-                    <img
-                      src={suggestion.logo}
-                      alt={suggestion.name}
-                      className="h-8 w-8"
-                    />
-                  </div>
-                  <div>
-                    {suggestion.name} {suggestion.symbol}
+                  <div className="flex items-center">
+                    <div className="flex items-center">
+                      <div className=" truncate ">{suggestion.name}</div>{" "}
+                      <div className="ml-1 text-right text-sm font-bold">
+                        {" "}
+                        {suggestion.symbol}
+                      </div>
+                    </div>
                   </div>
                 </li>
               ))}

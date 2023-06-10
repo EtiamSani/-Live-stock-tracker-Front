@@ -241,30 +241,6 @@ const StockTracker = () => {
     }
   }, [companiesInWatchList, socket]);
 
-  // useEffect(() => {
-  //   const fetchLogoUrls = async () => {
-  //     try {
-  //       const urls = {};
-  //       for (const company of companiesInWatchList) {
-  //         const url = await fetchCompaniesLogo(company.symbol);
-  //         urls[company.symbol] = url;
-  //       }
-  //       setLogoUrls(urls);
-  //     } catch (error) {
-  //       console.error("Failed to fetch company logos:", error);
-  //       const urls = {};
-  //       for (const company of companiesInWatchList) {
-  //         urls[company.symbol] = null; // Utilisez null pour indiquer que le logo n'est pas disponible
-  //       }
-  //       setLogoUrls(urls);
-  //     }
-  //   };
-
-  //   if (companiesInWatchList) {
-  //     fetchLogoUrls();
-  //   }
-  // }, [companiesInWatchList]);
-
   const [watchlists, setWatchlists] = useState([]);
 
   useEffect(() => {
@@ -272,10 +248,6 @@ const StockTracker = () => {
       setWatchlists(data);
     }
   }, [data]);
-
-  console.log("Watchlist:", watchlists);
-
-  // ...
 
   const updateWatchlists = (listId) => {
     setWatchlists((prevWatchlists) =>
@@ -403,7 +375,7 @@ const CompanyRow = ({
     <tr key={company.id} className="border-b border-gray-200">
       <td>
         <div className="flex items-center space-x-3">
-          <div className="avatar">
+          <div className="avatar mt-2">
             <div className="h-11 w-11 rounded-full">
               {company.logo ? (
                 <img src={company.logo} alt="Company Logo" />
