@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import TableHeader from "../components/TableHeader";
 import CompanyBadge from "../components/CompanyBadge";
 import WebSocketContext from "../APIServices/webSocketContext";
-
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
 import { fetchClosePrice } from "../APIServices/fetchClosePrice";
 import Lazy from "../components/LazyLoadingWatchlist";
@@ -433,7 +432,7 @@ const CompanyRow = ({
           className="btn-ghost btn-sm btn p-0 sm:btn-xs md:btn-xs lg:btn-lg hover:bg-red-300"
           onClick={() => handleDeleteCompany(company.id)}
         >
-          <RiDeleteBin7Line className="text-xs lg:text-lg" />
+          <RiDeleteBin7Line className="mb-2 mr-6 text-xs lg:m-0 lg:text-lg" />
         </button>
       </th>
     </tr>
