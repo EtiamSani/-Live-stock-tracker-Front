@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import TableHeader from "../components/TableHeader";
 import CompanyBadge from "../components/CompanyBadge";
 import WebSocketContext from "../APIServices/webSocketContext";
-import generateLogoPlaceholder from "../APIServices/generateLogoPlaceholder";
+
 import fetchCompaniesLogo from "../APIServices/fetchCompaniesLogo";
 import { fetchClosePrice } from "../APIServices/fetchClosePrice";
 import Lazy from "../components/LazyLoadingWatchlist";
@@ -377,11 +377,7 @@ const CompanyRow = ({
         <div className="flex items-center space-x-3">
           <div className="avatar mt-2">
             <div className="h-11 w-11 rounded-full">
-              {company.logo ? (
-                <img src={company.logo} alt="Company Logo" />
-              ) : (
-                generateLogoPlaceholder(company.symbol)
-              )}
+              <img src={company.logo} alt="Company Logo" />
             </div>
           </div>
           <div>
