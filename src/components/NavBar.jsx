@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import fetchInvestor from "../APIServices/fetchInvestor";
+import { useQuery } from "@tanstack/react-query";
 
 const NavBar = () => {
   const [isNavOpen, SetIsNavOpen] = useState(false);
@@ -10,33 +12,41 @@ const NavBar = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    // Récupérer le token depuis localStorage
     const token = localStorage.getItem("token");
 
-    // Vérifier si le token existe
     if (token) {
       try {
-        // Décoder le token pour obtenir les informations
         const decodedToken = jwt_decode(token);
-        console.log(decodedToken);
+        // console.log(decodedToken);
 
-        // Vérifier si le décodage a réussi
         if (decodedToken) {
-          // Récupérer le chemin de la photo de profil depuis les informations du token
-          const photoPath = `http://localhost:3000/${decodedToken.data.profilpicture}`;
+          // const photoPath = `http://localhost:3000/${decodedToken.data.profilpicture}`;
+          // setProfilePhoto(photoPath);
+          setIsLoggedIn(true);
 
-          // Mettre à jour l'état avec le chemin de la photo de profil
-          setProfilePhoto(photoPath);
-          setIsLoggedIn(true); // Définir isLoggedIn sur true lorsque l'utilisateur est connecté
-
-          const username = decodedToken.data.nickname;
-          setUsername(username);
+          //   const response = await fetch(
+          //     `http://localhost:3000/investor/${decodedToken.data.id}`
+          //   );
+          //   const data = await response.json();
+          //   const fetchedUsername = data.nickname;
+          //   const fetchedProfilPicture = data.profilpicture;
+          //   setUsername(fetchedUsername);
+          //   setProfilePhoto(fetchedProfilPicture);
         }
       } catch (error) {
         console.error("Failed to decode token:", error);
       }
     }
   }, []);
+
+  const results = useQuery(["investor"], fetchInvestor, {
+    onSuccess: (data) => {
+      const fetchedUsername = data.nickname;
+      const fetchedProfilPicture = data.profilpicture;
+      setUsername(fetchedUsername);
+      setProfilePhoto(fetchedProfilPicture);
+    },
+  });
 
   const handleLogout = () => {
     // Supprimer le token du localStorage
@@ -69,7 +79,10 @@ const NavBar = () => {
           <div className="mask mask-squircle w-10">
             <Link to="/mon-compte">
               <div className="mask mask-squircle w-10">
-                <img src={profilePhoto} alt="Profile" />
+                <img
+                  src={`http://localhost:3000/${profilePhoto}`}
+                  alt="Profile"
+                />
               </div>
             </Link>
           </div>
