@@ -296,7 +296,7 @@ const StockTracker = () => {
           )}
         </div>
 
-        <table className="table-compact mx-auto max-w-xl shadow lg:table lg:w-96">
+        <table className="table-compact mx-auto max-w-xl shadow-xl lg:table lg:w-96">
           <TableHeader />
           <tbody>
             {isCompaniesLoading ? (
@@ -344,7 +344,6 @@ const StockTracker = () => {
 
 const CompanyRow = ({
   company,
-  logoUrl,
   tradeData,
   isEditing,
   editingCompanyId,
@@ -406,7 +405,7 @@ const CompanyRow = ({
           <input
             className="input-xs mt-3 w-20 rounded-md"
             type="number"
-            value={updatedEntryPrice}
+            // value={updatedEntryPrice}
             onChange={handlePriceChange}
             onBlur={handlePriceSubmit}
             onKeyDown={handleKeyDown}
