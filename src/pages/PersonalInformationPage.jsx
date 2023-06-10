@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import fetchInvestor from "../APIServices/fetchInvestor";
+import { useQuery } from "@tanstack/react-query";
 
 const PersonalInformationPage = () => {
   const [nickname, setNickname] = useState("");
@@ -39,12 +41,6 @@ const PersonalInformationPage = () => {
 
           // Mettre à jour l'état avec le chemin de la photo de profil
           setProfilePhoto(photoPath);
-
-          const username = decodedToken.data.nickname;
-          setUsername(username);
-
-          setNickname(decodedToken.data.nickname);
-          setEmail(decodedToken.data.email);
         }
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -82,10 +78,6 @@ const PersonalInformationPage = () => {
         setEmail("");
         setPassword("");
         setIsUpdated(true);
-
-        // Mettre à jour les informations dans le stockage local
-        localStorage.setItem("nickname", nickname);
-        localStorage.setItem("email", email);
       })
       .catch((error) => {
         console.error("Failed to update data:", error);
@@ -107,6 +99,15 @@ const PersonalInformationPage = () => {
   useEffect(() => {
     setIsUpdated(false);
   }, []);
+
+  const results = useQuery(["investor"], fetchInvestor, {
+    onSuccess: (data) => {
+      const fetchedUsername = data.nickname;
+      const fetchedEmail = data.email;
+      setNickname(fetchedUsername);
+      setEmail(fetchedEmail);
+    },
+  });
 
   return (
     <div className="m-0 ">
