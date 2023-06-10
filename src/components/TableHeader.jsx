@@ -4,6 +4,7 @@ const TableHeader = () => {
       <tr>
         <th></th>
         <th></th>
+        <th></th>
         <th>Prix d'entrée</th>
         <th></th>
       </tr>

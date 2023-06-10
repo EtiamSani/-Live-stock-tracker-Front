@@ -16,6 +16,7 @@ import { fetchClosePrice } from "../APIServices/fetchClosePrice";
 import Lazy from "../components/LazyLoadingWatchlist";
 import LazyCompanyLogo from "../components/LazyLoadingCompaniesLogo";
 import LazyCompanyName from "../components/LazyLoadingCompanyName";
+import MarketStatus from "../components/MarketStatus";
 
 const StockTracker = () => {
   const base_url = "http://localhost:3000";
@@ -419,6 +420,11 @@ const CompanyRow = ({
             </div>
             <div className="text-sm opacity-50">{company.symbol}</div>
           </div>
+        </div>
+      </td>
+      <td className="m-0 -ml-5 w-0.5  p-0">
+        <div className="-ml-1.5 mb-2">
+          <MarketStatus />
         </div>
       </td>
       <td className="font-extrabold">
