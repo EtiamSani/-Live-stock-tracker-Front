@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import fetchCompaniesInWatchLists from "./APIServices/fetchCompaniesInWatchList";
 import { useState, useEffect } from "react";
 import PersonalInformationPage from "./pages/PersonalInformationPage";
+import SignUpage from "./pages/SignUpPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/watchlists" element={<StockTracker />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/mon-compte" element={<PersonalInformationPage />} />
+              <Route path="/auth/register-investor" element={<SignUpage />} />
             </Routes>
           </div>
           <ReactQueryDevtools initialIsOpen={false} />
