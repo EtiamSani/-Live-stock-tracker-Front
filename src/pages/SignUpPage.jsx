@@ -25,16 +25,8 @@ const SignUpage = () => {
         throw new Error("Login failed");
       }
 
-      // Obtenir le token de la réponse
-      const data = await response.json();
-      const token = data.token;
-      console.log(token);
-
-      // Stocker le token dans localStorage
-      localStorage.setItem("token", token);
-
       // Recharger la page ou accéder à une autre URL après la connexion réussie
-      window.location.href = "/watchlists";
+      window.location.href = "/login";
 
       // Réinitialiser les champs d'entrée
       setEmail("");
@@ -46,7 +38,7 @@ const SignUpage = () => {
 
   return (
     <div className="relative flex h-screen flex-col justify-center overflow-hidden">
-      <div className="m-auto w-full rounded-md bg-white p-6 shadow-md lg:max-w-lg">
+      <div className="m-auto w-full rounded-md bg-white p-6 shadow-xl lg:max-w-lg">
         <h1 className="text-center text-3xl font-semibold text-blue-700">
           Inscrivez-vous
         </h1>
@@ -59,7 +51,7 @@ const SignUpage = () => {
               type="text"
               placeholder="Votre pseudo"
               className="input-bordered input-primary input w-full"
-              value={email}
+              value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
           </div>
@@ -109,7 +101,7 @@ const SignUpage = () => {
           </a>
           <div>
             <button type="submit" className="btn-primary btn">
-              S'incrire
+              S'inscrire
             </button>
           </div>
         </form>

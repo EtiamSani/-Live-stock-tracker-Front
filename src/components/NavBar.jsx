@@ -50,7 +50,9 @@ const NavBar = () => {
 
   const handleLogout = () => {
     // Supprimer le token du localStorage
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    // supprimer tout dans le localStorage
+    localStorage.clear();
 
     // Recharger la page pour revenir à la page de connexion
     window.location.href = "/login";
