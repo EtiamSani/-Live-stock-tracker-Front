@@ -3,19 +3,23 @@ import { useState } from "react";
 const SignUpage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Effectuer ici votre logique de connexion en utilisant l'email et le mot de passe
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/auth/register-investor",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password, confirmPassword, nickname }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Login failed");
@@ -56,7 +60,7 @@ const SignUpage = () => {
               placeholder="Votre pseudo"
               className="input-bordered input-primary input w-full"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setNickname(e.target.value)}
             />
           </div>
           <div>
@@ -93,8 +97,8 @@ const SignUpage = () => {
               type="password"
               placeholder="Votre mot de passe"
               className="input-bordered input-primary input w-full"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setconfirmPassword(e.target.value)}
             />
           </div>
           <a
