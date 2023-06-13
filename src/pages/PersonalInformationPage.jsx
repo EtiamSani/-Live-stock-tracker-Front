@@ -50,6 +50,7 @@ const PersonalInformationPage = () => {
 
   const handleSubmit = (event) => {
     // Créer un objet avec les données du formulaire
+    event.preventDefault();
     const formData = {
       nickname,
       email,
@@ -78,6 +79,11 @@ const PersonalInformationPage = () => {
         setEmail("");
         setPassword("");
         setIsUpdated(true);
+
+        // Recharger la page après un délai de 2 secondes
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((error) => {
         console.error("Failed to update data:", error);
