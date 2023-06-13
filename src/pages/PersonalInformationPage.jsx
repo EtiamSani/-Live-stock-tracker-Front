@@ -100,14 +100,27 @@ const PersonalInformationPage = () => {
     setIsUpdated(false);
   }, []);
 
-  const results = useQuery(["investor"], fetchInvestor, {
-    onSuccess: (data) => {
-      const fetchedUsername = data.nickname;
-      const fetchedEmail = data.email;
-      setNickname(fetchedUsername);
-      setEmail(fetchedEmail);
-    },
-  });
+  useEffect(() => {
+    const fetchInvestor = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const decodedToken = jwt_decode(token);
+        const investorId = decodedToken.data.id;
+        const response = await fetch(
+          `http://localhost:3000/investor/${investorId}`
+        );
+        const data = await response.json();
+        const fetchedUsername = data.nickname;
+        const fetchedEmail = data.email;
+        setNickname(fetchedUsername);
+        setEmail(fetchedEmail);
+      } catch (error) {
+        console.error("Error occurred while fetching investor data:", error);
+      }
+    };
+
+    fetchInvestor();
+  }, []);
 
   return (
     <div className="m-0 ">
