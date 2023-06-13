@@ -10,6 +10,7 @@ const PersonalInformationPage = () => {
   const [username, setUsername] = useState("");
   const [profilpicture, setProfilePhoto] = useState("");
   const [isUpdated, setIsUpdated] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
@@ -73,6 +74,7 @@ const PersonalInformationPage = () => {
       .then((data) => {
         // Traiter la réponse de la requête
         console.log("Response from server:", data);
+        setServerError(data.error);
 
         // Réinitialiser les champs du formulaire
         setNickname("");
@@ -81,9 +83,9 @@ const PersonalInformationPage = () => {
         setIsUpdated(true);
 
         // Recharger la page après un délai de 2 secondes
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
       })
       .catch((error) => {
         console.error("Failed to update data:", error);
@@ -122,11 +124,20 @@ const PersonalInformationPage = () => {
         setEmail(fetchedEmail);
       } catch (error) {
         console.error("Error occurred while fetching investor data:", error);
+        // Récupérer le message d'erreur du serveur
       }
     };
 
     fetchInvestor();
   }, []);
+
+  useEffect(() => {
+    if (isUpdated && !serverError) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }, [isUpdated]);
 
   return (
     <div className="m-0 ">
@@ -170,7 +181,7 @@ const PersonalInformationPage = () => {
                 onChange={handlePasswordChange}
               />
             </div>
-            {isUpdated && (
+            {isUpdated && !serverError && (
               <div className="h-30 alert alert-success m-5  w-72">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,6 +202,10 @@ const PersonalInformationPage = () => {
                 </span>
               </div>
             )}
+            {serverError && (
+              <div className="alert alert-error mt-3">{serverError}</div>
+            )}
+
             <button
               type="submit"
               className="btn-primary btn mx-auto mb-5 mt-4 block"
