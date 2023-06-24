@@ -15,7 +15,6 @@ const SearchBar = ({ refetch }) => {
       setLoading(true);
       const response = await fetch(base_url + "/tickersearch/" + input);
       const result = await response.json();
-      console.log(result);
       setData(result); // Fetching the 'result' array from the response
       setLoading(false);
     };
@@ -50,10 +49,8 @@ const SearchBar = ({ refetch }) => {
       name: suggestion.name,
       logo: suggestion.logo,
     };
-    console.log("datatosend", dataToSend);
 
     const selectedId = localStorage.getItem("selectedId");
-    console.log(selectedId);
     // Send a POST request
     const response = await fetch(base_url + "/company", {
       method: "POST", // or 'PUT'
@@ -90,11 +87,9 @@ const SearchBar = ({ refetch }) => {
           `Error attaching company to watchlist: ${attachResponse.statusText}`
         );
       } else if (typeof refetch === "function") {
-        console.log("About to call refetch");
         refetch();
       }
     }
-    console.log(responseData);
   };
 
   return (

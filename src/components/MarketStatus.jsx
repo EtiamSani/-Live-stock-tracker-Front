@@ -3,7 +3,6 @@ function MarketStatus() {
   const dayOfWeek = now.getDay();
   const currentHour = now.getHours();
   const currentMinutes = now.getMinutes();
-  console.log(currentHour);
 
   if (
     dayOfWeek >= 1 &&

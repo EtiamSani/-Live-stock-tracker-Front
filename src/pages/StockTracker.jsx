@@ -140,15 +140,13 @@ const StockTracker = () => {
         const trade = JSON.parse(event.data);
 
         if (trade && trade.data && trade.data[0] && trade.type !== "ping") {
-          console.log("Trade data:", trade.data[0]);
+          // console.log("Trade data:", trade.data[0]);
           const symbol = trade.data[0].s;
-          // const closePriceData = await fetchClosePrice(symbol);
-          // console.log("Close price data:", closePriceData);
+
           setTradeData((prevTradeData) => ({
             ...prevTradeData,
             [trade.data[0].s]: trade.data[0].p,
           }));
-          // console.log(trade.data[0].p);
         } else {
           console.error("Received malformed data:", trade);
         }
@@ -169,7 +167,7 @@ const StockTracker = () => {
 
       const handleOpen = () => {
         setIsWebSocketConnected(true);
-        console.log("WebSocket connection established. Sending messages...");
+        // console.log("WebSocket connection established. Sending messages...");
         symbols.forEach((symbol) => {
           const message = JSON.stringify({ type: "subscribe", symbol });
           sendWebSocketMessage(message);
@@ -258,6 +256,12 @@ const StockTracker = () => {
     const updatedWatchlists = await fetchWatchLists();
     setWatchlists(updatedWatchlists);
   };
+
+  // useEffect(() => {
+  //   if (companiesInWatchList) {
+  //     refetch(["companiesInWatchlist"]);
+  //   }
+  // }, [companiesInWatchList, refetch]);
 
   return (
     <div className="flex items-center justify-center">

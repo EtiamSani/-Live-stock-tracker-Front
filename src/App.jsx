@@ -11,7 +11,6 @@ import fetchCompaniesInWatchLists from "./APIServices/fetchCompaniesInWatchList"
 import { useState, useEffect } from "react";
 import PersonalInformationPage from "./pages/PersonalInformationPage";
 import SignUpage from "./pages/SignUpPage";
-import { fetchClosePrice } from "./APIServices/fetchClosePrice";
 
 const queryClient = new QueryClient({
   defaultOptions: {
