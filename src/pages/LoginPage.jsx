@@ -9,13 +9,16 @@ const LoginPage = () => {
 
     // Effectuer ici votre logique de connexion en utilisant l'email et le mot de passe
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://stock-tracker-api.up.railway.app/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Login failed");

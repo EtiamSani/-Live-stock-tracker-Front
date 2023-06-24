@@ -11,7 +11,7 @@ const SignUpage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/auth/register-investor",
+        "https://stock-tracker-api.up.railway.app/auth/register-investor",
         {
           method: "POST",
           headers: {
