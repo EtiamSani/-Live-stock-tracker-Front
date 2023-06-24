@@ -27,7 +27,6 @@ const App = () => {
 
   useEffect(() => {
     fetchCompaniesInWatchLists().then(setCurrentWatchList);
-    fetchClosePrice();
   }, []);
   return (
     <WebSocketProvider currentWatchList={currentWatchList}>
