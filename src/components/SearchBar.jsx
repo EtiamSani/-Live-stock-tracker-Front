@@ -8,7 +8,7 @@ const SearchBar = ({ refetch }) => {
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const base_url = "http://localhost:3000";
+  const base_url = "https://stock-tracker-api.up.railway.app";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +75,7 @@ const SearchBar = ({ refetch }) => {
     // Use the id from the response to make another request
     if (responseData && responseData.id) {
       const attachResponse = await fetch(
-        `http://localhost:3000/watchlist/${selectedId}/company/${responseData.id}`,
+        `https://stock-tracker-api.up.railway.app/watchlist/${selectedId}/company/${responseData.id}`,
         {
           method: "POST", // or whatever HTTP method is needed
           headers: {

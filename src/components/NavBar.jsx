@@ -82,7 +82,7 @@ const NavBar = () => {
             <Link to="/mon-compte">
               <div className="mask mask-squircle w-10">
                 <img
-                  src={`http://localhost:3000/${profilePhoto}`}
+                  src={`https://stock-tracker-api.up.railway.app/${profilePhoto}`}
                   alt="Profile"
                 />
               </div>

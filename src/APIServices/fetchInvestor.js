@@ -9,7 +9,9 @@ const fetchInvestor = async () => {
   const decodedToken = jwt_decode(token);
   const investorId = decodedToken.data.id;
 
-  const apiRes = await fetch(`http://localhost:3000/investor/${investorId}`);
+  const apiRes = await fetch(
+    `https://stock-tracker-api.up.railway.app/investor/${investorId}`
+  );
 
   if (!apiRes.ok) {
     throw new Error("fetch not ok");

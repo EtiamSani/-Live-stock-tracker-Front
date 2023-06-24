@@ -18,7 +18,7 @@ import LazyCompanyName from "../components/LazyLoadingCompanyName";
 import MarketStatus from "../components/MarketStatus";
 
 const StockTracker = () => {
-  const base_url = "http://localhost:3000";
+  const base_url = "https://stock-tracker-api.up.railway.app";
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [editingCompanyId, setEditingCompanyId] = useState(null);

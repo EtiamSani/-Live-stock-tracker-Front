@@ -61,13 +61,16 @@ const CompanyBadge = ({
 
     // if already in editing mode, send the update request
     const id = localStorage.getItem("selectedId");
-    const response = await fetch(`http://localhost:3000/watchlist/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: updatedName }),
-    });
+    const response = await fetch(
+      `https://stock-tracker-api.up.railway.app/watchlist/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: updatedName }),
+      }
+    );
 
     // handle the response...
     // if update was successful, exit the editing mode
@@ -84,7 +87,7 @@ const CompanyBadge = ({
     try {
       const id = localStorage.getItem("selectedId");
       const firstResponse = await fetch(
-        `http://localhost:3000/watchlist/deletewithcompanies/${id}`,
+        `https://stock-tracker-api.up.railway.app/deletewithcompanies/${id}`,
         {
           method: "DELETE",
         }
@@ -92,7 +95,7 @@ const CompanyBadge = ({
       await handleUpdateWatchlists();
       if (firstResponse.ok) {
         const secondResponse = await fetch(
-          `http://localhost:3000/watchlist/${id}`,
+          `https://stock-tracker-api.up.railway.app/watchlist/${id}`,
           {
             method: "DELETE",
           }

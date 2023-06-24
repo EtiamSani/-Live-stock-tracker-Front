@@ -1,7 +1,7 @@
 const fetchCompaniesLogo = async (symbol) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/tickersearch/logo/${symbol}`
+      `https://stock-tracker-api.up.railway.app/tickersearch/logo/${symbol}`
     );
     const data = await response.json();
     return data.logo;

@@ -18,11 +18,14 @@ const ListModal = ({ refreshWatchlists }) => {
   };
 
   const handleCreateList = async () => {
-    const response = await fetch("http://localhost:3000/watchlist", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newListName, investor_id: investorId }),
-    });
+    const response = await fetch(
+      "https://stock-tracker-api.up.railway.app/watchlist",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newListName, investor_id: investorId }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Erreur lors de la création de la nouvelle liste");

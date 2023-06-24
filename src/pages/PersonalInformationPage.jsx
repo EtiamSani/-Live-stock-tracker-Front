@@ -38,7 +38,7 @@ const PersonalInformationPage = () => {
         // Vérifier si le décodage a réussi
         if (decodedToken) {
           // Récupérer le chemin de la photo de profil depuis les informations du token
-          const photoPath = `http://localhost:3000/${decodedToken.data.profilpicture}`;
+          const photoPath = `https://stock-tracker-api.up.railway.app/${decodedToken.data.profilpicture}`;
 
           // Mettre à jour l'état avec le chemin de la photo de profil
           setProfilePhoto(photoPath);
@@ -63,7 +63,7 @@ const PersonalInformationPage = () => {
 
     const id = decodedToken.data.id;
     // Envoyer les données à la route http://localhost:3000/investor/
-    fetch(`http://localhost:3000/investor/${id}`, {
+    fetch(`https://stock-tracker-api.up.railway.app/investor/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const PersonalInformationPage = () => {
         const decodedToken = jwt_decode(token);
         const investorId = decodedToken.data.id;
         const response = await fetch(
-          `http://localhost:3000/investor/${investorId}`
+          `https://stock-tracker-api.up.railway.app/investor/${investorId}`
         );
         const data = await response.json();
         const fetchedUsername = data.nickname;

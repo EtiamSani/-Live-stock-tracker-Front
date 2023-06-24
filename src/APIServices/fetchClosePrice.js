@@ -1,4 +1,4 @@
-const base_url = "http://localhost:3000";
+const base_url = "https://stock-tracker-api.up.railway.app";
 
 export async function fetchClosePrice(symbol) {
   try {
