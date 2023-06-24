@@ -87,7 +87,7 @@ const CompanyBadge = ({
     try {
       const id = localStorage.getItem("selectedId");
       const firstResponse = await fetch(
-        `https://stock-tracker-api.up.railway.app/deletewithcompanies/${id}`,
+        `https://stock-tracker-api.up.railway.app/watchlist/deletewithcompanies/${id}`,
         {
           method: "DELETE",
         }
