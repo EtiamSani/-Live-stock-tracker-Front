@@ -1,4 +1,4 @@
-import mockup from "../../public/images/Mockup.png";
+import mockup from "../public/images/Mockup.png";
 
 const Presentation = () => {
   return (
