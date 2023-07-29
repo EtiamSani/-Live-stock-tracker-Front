@@ -20,18 +20,7 @@ const NavBar = () => {
         // console.log(decodedToken);
 
         if (decodedToken) {
-          // const photoPath = `http://localhost:3000/${decodedToken.data.profilpicture}`;
-          // setProfilePhoto(photoPath);
           setIsLoggedIn(true);
-
-          //   const response = await fetch(
-          //     `http://localhost:3000/investor/${decodedToken.data.id}`
-          //   );
-          //   const data = await response.json();
-          //   const fetchedUsername = data.nickname;
-          //   const fetchedProfilPicture = data.profilpicture;
-          //   setUsername(fetchedUsername);
-          //   setProfilePhoto(fetchedProfilPicture);
         }
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -59,7 +48,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar w-full min-w-full bg-blue-100 ">
+    <div className="navbar sticky top-0 z-50 w-full min-w-full bg-blue-100">
       <div className="flex-1 items-center justify-between ">
         <Link
           to="/"

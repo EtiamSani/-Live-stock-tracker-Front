@@ -44,7 +44,7 @@ const TickerTape = () => {
     <div>
       <div
         id="tradingview-widget-container"
-        className="tradingview-widget-container"
+        className="tradingview-widget-container "
       >
         <div className="tradingview-widget-container__widget"></div>
       </div>

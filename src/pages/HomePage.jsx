@@ -4,14 +4,15 @@ import Presentation from "../components/Presentation";
 import TickerTape from "../components/TickerTape";
 import Testimonial from "../components/Testimonial";
 import Card from "../components/Card";
+import { cardData } from "../utils/cardData";
 
 const HomePage = () => {
   return (
     <div>
       <TickerTape />
       <Hero />
+      <Card cardData={cardData} />
       <Presentation />
-      <Card />
       <Testimonial />
       <Footer />
     </div>

@@ -14,3 +14,12 @@
 .spinner {
   animation: spin 1s linear infinite;
 }
+
+.text-gradient {
+  /* Utilisation du dégradé de couleur (choisissez les couleurs souhaitées) */
+  background: linear-gradient(to right, #0a192f, #0284c7);
+  /* Pour permettre au texte de s'afficher correctement sur le dégradé */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
