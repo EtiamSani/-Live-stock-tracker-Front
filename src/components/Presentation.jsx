@@ -33,7 +33,7 @@ const Presentation = ({ presentationData }) => {
     <div className="justify-center lg:flex">
       {presentationData.map((data) => (
         <div key={data.title}>
-          <h1 className="mt-10 text-center text-xl font-bold lg:ml-20 lg:w-[700px] lg:text-left lg:text-4xl">
+          <h1 className="mt-10 text-center text-xl font-bold text-[#6496e0] lg:m-auto lg:w-[600px] lg:text-left lg:text-4xl">
             {data.title}
           </h1>
           <div ref={ref} className="lg:mt-20">
@@ -48,7 +48,7 @@ const Presentation = ({ presentationData }) => {
       ))}
       {/* <Element id="cardSection"> */}
       <motion.div animate={animation}>
-        <img src={mockup} className="mr-28 w-[700px]" alt="Mockup" />
+        <img src={mockup} className="mb-20 mr-28 w-[620px]" alt="Mockup" />
       </motion.div>
       {/* </Element> */}
     </div>
