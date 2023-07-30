@@ -14,12 +14,12 @@ const Hero = () => {
     >
       <div className="hero min-h-screen">
         <div className="hero-content ">
-          <div className="lg:w-[950px]">
+          <div className="top-1 lg:w-[950px]">
             <div>
-              <h1 className="text-gradient mb-5 w-full text-center font-bold lg:text-9xl">
+              <h1 className="text-gradient mb-5 w-full text-center text-4xl font-bold lg:text-9xl">
                 Suivez vos actions avec précision.
               </h1>
-              <h2 className="mb-5 text-center text-2xl text-black">
+              <h2 className="mb-5 text-center text-xl text-black">
                 En enregistrant vos points d'entrée, vous serez mieux préparé
                 pour saisir rapidement les bonnes occasions d'investissement et
                 prendre des décisions plus éclairées dans votre parcours

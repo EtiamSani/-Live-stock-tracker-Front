@@ -9,7 +9,7 @@ const Presentation = ({ presentationData }) => {
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     );
-  const { ref, inView } = useInView({ threshold: isMobile ? 1 : 0.7 });
+  const { ref, inView } = useInView({ threshold: isMobile ? 0.1 : 0.7 });
   const animation = useAnimation();
 
   useEffect(() => {
@@ -30,16 +30,16 @@ const Presentation = ({ presentationData }) => {
   }, [inView, animation, isMobile]);
 
   return (
-    <div className="lg:flex">
+    <div className="justify-center lg:flex">
       {presentationData.map((data) => (
         <div key={data.title}>
-          <h1 className="mt-10 text-center font-bold lg:text-4xl">
+          <h1 className="mt-10 text-center text-xl font-bold lg:ml-20 lg:w-[700px] lg:text-left lg:text-4xl">
             {data.title}
           </h1>
-          <div ref={ref} className="mt-20">
+          <div ref={ref} className="lg:mt-20">
             <div className="flex justify-center px-4">
               <div className="my-auto w-[600px]">
-                <h3 className="text-3xl">{data.subtitle}</h3>
+                <h3 className="text-xl lg:text-3xl">{data.subtitle}</h3>
                 <p>{data.value}</p>
               </div>
             </div>
@@ -48,7 +48,7 @@ const Presentation = ({ presentationData }) => {
       ))}
       {/* <Element id="cardSection"> */}
       <motion.div animate={animation}>
-        <img src={mockup} className="mr-20 w-[700px]" alt="Mockup" />
+        <img src={mockup} className="mr-28 w-[700px]" alt="Mockup" />
       </motion.div>
       {/* </Element> */}
     </div>
