@@ -41,7 +41,7 @@ const App = () => {
               <Route path="/auth/register-investor" element={<SignUpage />} />
             </Routes>
           </div>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryClientProvider>
       </BrowserRouter>
     </WebSocketProvider>

@@ -14,19 +14,19 @@ const Hero = () => {
     >
       <div className="hero min-h-screen">
         <div className="hero-content ">
-          <div className="lg:w-[750px]">
+          <div className="lg:w-[950px]">
             <div>
-              <h1 className="text-gradient mb-5 w-full text-center text-7xl font-bold">
-                Lorem ipsum dolor sit amet.
+              <h1 className="text-gradient mb-5 w-full text-center font-bold lg:text-9xl">
+                Suivez vos actions avec précision.
               </h1>
-              <p className="mb-5 text-center text-black">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                voluptatem nostrum accusamus ipsum sint ut officia, veniam
-                soluta aliquid totam. Lorem ipsum dolor sit amet consectetur
-                adipisicing elit
-              </p>
+              <h2 className="mb-5 text-center text-2xl text-black">
+                En enregistrant vos points d'entrée, vous serez mieux préparé
+                pour saisir rapidement les bonnes occasions d'investissement et
+                prendre des décisions plus éclairées dans votre parcours
+                financier.
+              </h2>
               <Link to="/auth/register-investor">
-                <div className="ml-8 lg:ml-60">
+                <div className="ml-8 lg:ml-[300px]">
                   <button className="btn-primary btn mx-auto rounded-3xl border-none bg-[#0a192f]">
                     Commencer !{" "}
                   </button>

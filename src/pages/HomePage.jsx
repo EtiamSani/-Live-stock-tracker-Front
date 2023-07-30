@@ -5,6 +5,7 @@ import TickerTape from "../components/TickerTape";
 import Testimonial from "../components/Testimonial";
 import Card from "../components/Card";
 import { cardData } from "../utils/cardData";
+import { presentationData } from "../utils/presentationData";
 
 const HomePage = () => {
   return (
@@ -12,7 +13,7 @@ const HomePage = () => {
       <TickerTape />
       <Hero />
       <Card cardData={cardData} />
-      <Presentation />
+      <Presentation presentationData={presentationData} />
       <Testimonial />
       <Footer />
     </div>

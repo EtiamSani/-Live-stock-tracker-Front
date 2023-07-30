@@ -11,7 +11,7 @@ const fetchWatchLists = async () => {
   const investorId = decodedToken.data.id;
 
   const apiRes = await fetch(
-    `http://localhost:3000/watchlist/investor/${investorId}`
+    `https://stock-tracker-api.up.railway.app/watchlist/investor/${investorId}`
   );
 
   if (!apiRes.ok) {
