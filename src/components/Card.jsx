@@ -33,9 +33,9 @@ const Card = ({ cardData }) => {
       >
         <div className="mb:flex-row m-auto flex flex-col justify-center lg:flex-row">
           {cardData.map((item, index) => (
-            <div key={index} className="w-50 card m-10 bg-base-100  lg:w-96">
-              <div className="card-body">
-                <h2 className="card-title text-2xl text-[#6496e0]">
+            <div key={index} className="card mb-20 bg-base-100  lg:w-[457px]">
+              <div className="w-50 card-body">
+                <h2 className="card-title text-3xl text-[#6496e0] ">
                   {item.title}
                 </h2>
                 <p>{item.value}</p>
