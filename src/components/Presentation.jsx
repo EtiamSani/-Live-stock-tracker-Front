@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useAnimation } from "framer-motion";
 
 const Presentation = ({ presentationData }) => {
-  const { ref, inView } = useInView({ threshold: 0.7 });
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  const { ref, inView } = useInView({ threshold: isMobile ? 1 : 0.7 });
   const animation = useAnimation();
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const Presentation = ({ presentationData }) => {
       animation.start({ x: "-100vw" });
     }
     console.log(inView);
-  }, [inView]);
+  }, [inView, animation, isMobile]);
 
   return (
     <div className="lg:flex">
