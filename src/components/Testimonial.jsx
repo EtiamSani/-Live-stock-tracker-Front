@@ -1,4 +1,5 @@
-import { testimonialsData } from "../APIServices/testimonialsData";
+import { testimonialsData } from "../utils/testimonialsData";
+import LogoSlider from "./LogoSlider";
 
 const Testimonial = () => {
   const renderStars = (rating) => {
@@ -15,18 +16,18 @@ const Testimonial = () => {
 
   return (
     <div>
-      <h2 className="mb-4 text-center text-3xl font-bold sm:text-5xl">
-        We have some fans.
+      <h2 className="mb-4 text-center text-3xl font-bold text-[#6496e0] sm:text-5xl">
+        Utilisé par les meilleurs investisseurs du monde.
       </h2>
       <p className="mb-6 text-center text-lg sm:text-2xl md:mb-14">
-        We create engaging experiences that are innovative and beautiful.
+        Les avis sont unanimes...!
       </p>
 
       <div className="flex flex-wrap justify-center">
         {testimonialsData.map((testimonial) => (
           <div
             key={testimonial.id}
-            className="mx-2 mb-6 max-w-md rounded-lg bg-white p-4 shadow-lg"
+            className="mx-2 mb-6 max-w-md rounded-lg bg-white p-4 shadow-2xl"
           >
             <div className="mb-4 flex items-center">
               <img
@@ -42,6 +43,7 @@ const Testimonial = () => {
             </div>
           </div>
         ))}
+        <LogoSlider />
       </div>
     </div>
   );

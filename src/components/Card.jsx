@@ -33,7 +33,10 @@ const Card = ({ cardData }) => {
       >
         <div className="mb:flex-row m-auto flex flex-col justify-center lg:flex-row">
           {cardData.map((item, index) => (
-            <div key={index} className="card mb-20 bg-base-100  lg:w-[457px]">
+            <div
+              key={index}
+              className="card bg-base-100 lg:mb-20  lg:w-[457px]"
+            >
               <div className="w-50 card-body">
                 <h2 className="card-title text-3xl text-[#6496e0] ">
                   {item.title}

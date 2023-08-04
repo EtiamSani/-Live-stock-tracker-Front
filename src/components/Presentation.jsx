@@ -33,14 +33,14 @@ const Presentation = ({ presentationData }) => {
     <div className="justify-center lg:flex">
       {presentationData.map((data) => (
         <div key={data.title}>
-          <h1 className="mt-10 text-center text-xl font-bold text-[#6496e0] lg:m-auto lg:w-[600px] lg:text-left lg:text-4xl">
+          <h1 className="mb-5 mt-10 text-center text-3xl font-bold text-[#6496e0] lg:m-auto lg:w-[600px] lg:text-left lg:text-4xl">
             {data.title}
           </h1>
-          <div ref={ref} className="lg:mt-20">
+          <div className="lg:mt-20">
             <div className="flex justify-center px-4">
               <div className="my-auto w-[600px]">
-                <h3 className="text-xl lg:text-3xl">{data.subtitle}</h3>
-                <p>{data.value}</p>
+                <h3 className="mb-5 text-xl lg:text-3xl">{data.subtitle}</h3>
+                <p ref={ref}>{data.value}</p>
               </div>
             </div>
           </div>
