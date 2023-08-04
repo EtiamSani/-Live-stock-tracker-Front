@@ -6,6 +6,7 @@ const logos = [
   "../public/images/blackrock.png",
   "../public/images/fundsmith.png",
   "../public/images/Vanguard.png",
+  "../public/images/jp.png",
 ];
 
 function LogoSlider() {
@@ -40,9 +41,9 @@ function LogoSlider() {
             key={index}
             src={logo}
             width={"150px"}
-            height={"100px"}
             alt={`Logo ${index + 1}`}
-            style={{ marginRight: "50px" }}
+            style={{ marginRight: "100px" }}
+            className="h-12"
           />
         ))}
       </motion.div>
