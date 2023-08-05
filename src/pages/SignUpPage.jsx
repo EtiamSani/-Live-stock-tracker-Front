@@ -8,6 +8,75 @@ const SignUpage = () => {
   const [confirmPassword, setconfirmPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
+  const [message, setMessage] = useState("");
+  const [progress, setProgress] = useState("");
+
+  const initialChecks = {
+    length: 0,
+    hasUpperCase: false,
+    hasLowerCase: false,
+    hasDigit: false,
+    hasSpecialChar: false,
+  };
+
+  const [strengthChecks, setStrengthChecks] = useState(initialChecks);
+
+  const checkPasswordStrength = (passwordValue) => {
+    const checks = {
+      length: passwordValue.length >= 8,
+      hasUpperCase: /[A-Z]+/.test(passwordValue),
+      hasLowerCase: /[a-z]+/.test(passwordValue),
+      hasDigit: /[0-9]+/.test(passwordValue),
+      hasSpecialChar: /[^A-Za-z0-9]+/.test(passwordValue),
+    };
+
+    setStrengthChecks(checks);
+  };
+
+  const handlePassword = (passwordValue) => {
+    checkPasswordStrength(passwordValue);
+
+    const checks = {
+      length: passwordValue.length >= 8,
+      hasUpperCase: /[A-Z]+/.test(passwordValue),
+      hasLowerCase: /[a-z]+/.test(passwordValue),
+      hasDigit: /[0-9]+/.test(passwordValue),
+      hasSpecialChar: /[^A-Za-z0-9]+/.test(passwordValue),
+    };
+
+    setStrengthChecks(checks);
+
+    strengthChecks.length = passwordValue.length >= 8 ? true : false;
+    strengthChecks.hasUpperCase = /[A-Z]+/.test(passwordValue);
+    strengthChecks.hasLowerCase = /[a-z]+/.test(passwordValue);
+    strengthChecks.hasDigit = /[0-9]+/.test(passwordValue);
+    strengthChecks.hasSpecialChar = /[^A-Za-z0-9]+/.test(passwordValue);
+
+    let verifiedList = Object.values(strengthChecks).filter((value) => value);
+
+    let strength =
+      verifiedList.length === 5
+        ? "Fort"
+        : verifiedList.length >= 2
+        ? "Moyen"
+        : "Faible";
+
+    setPassword(passwordValue);
+    setProgress(`${(verifiedList.length / 5) * 100}%`);
+    setMessage(strength);
+  };
+
+  const getActiveColor = (type) => {
+    if (type === "Fort") return "text-green-500 text-xs";
+    if (type === "Moyen") return "text-yellow-500 text-xs";
+    return "text-red-500 text-xs";
+  };
+
+  const getActiveColorBar = (type) => {
+    if (type === "Fort") return "bg-green-500";
+    if (type === "Moyen") return "bg-yellow-500";
+    return "bg-red-500";
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -80,7 +149,10 @@ const SignUpage = () => {
                 placeholder="Votre mot de passe"
                 className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  handlePassword(e.target.value);
+                }}
               />
               <a
                 onClick={() => setHidePassword(!hidePassword)}
@@ -90,7 +162,57 @@ const SignUpage = () => {
                 {hidePassword ? <IoEyeSharp /> : <FaEyeSlash />}
               </a>
             </div>
+            <div
+              className={`progress ${getActiveColorBar(message)}`}
+              style={{
+                width: progress,
+              }}
+            ></div>
+            <div>
+              {password.length !== 0 ? (
+                <p className={`message ${getActiveColor(message)}`}>
+                  Votre mot de passe est {message}
+                </p>
+              ) : null}
+              {strengthChecks.length &&
+              strengthChecks.hasUpperCase &&
+              strengthChecks.hasLowerCase &&
+              strengthChecks.hasDigit &&
+              strengthChecks.hasSpecialChar ? null : (
+                <>
+                  <div className="card-compact rounded-xl bg-white p-2 shadow-xl">
+                    <p className="mb-2 font-bold">
+                      Le mot de passe doit comporter au moins
+                    </p>
+                    {!strengthChecks.length && (
+                      <p className="text-xs text-red-400">8 caractères.</p>
+                    )}
+                    {!strengthChecks.hasUpperCase && (
+                      <p className="text-xs text-red-400">
+                        Une lettre majuscule.
+                      </p>
+                    )}
+                    {!strengthChecks.hasLowerCase && (
+                      <p className="text-xs text-red-400">
+                        Une lettre minuscule.
+                      </p>
+                    )}
+                    {!strengthChecks.hasDigit && (
+                      <p className="text-xs text-red-400">
+                        Au moins un chiffre.
+                      </p>
+                    )}
+                    {!strengthChecks.hasSpecialChar && (
+                      <p className="text-xs text-red-400">
+                        Au moins un caractère spécial.
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+
           <div>
             <label className="label">
               <span className="label-text text-base">

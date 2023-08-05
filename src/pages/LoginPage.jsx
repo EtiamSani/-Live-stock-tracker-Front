@@ -7,6 +7,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [verify, setVerify] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
+  const [message, setMessage] = useState("");
+  const [progress, setProgress] = useState("");
 
   const onChange = () => {
     setVerify(true);
@@ -49,6 +51,73 @@ const LoginPage = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const initialChecks = {
+    length: 0,
+    hasUpperCase: false,
+    hasLowerCase: false,
+    hasDigit: false,
+    hasSpecialChar: false,
+  };
+
+  const [strengthChecks, setStrengthChecks] = useState(initialChecks);
+
+  const checkPasswordStrength = (passwordValue) => {
+    const checks = {
+      length: passwordValue.length >= 8,
+      hasUpperCase: /[A-Z]+/.test(passwordValue),
+      hasLowerCase: /[a-z]+/.test(passwordValue),
+      hasDigit: /[0-9]+/.test(passwordValue),
+      hasSpecialChar: /[^A-Za-z0-9]+/.test(passwordValue),
+    };
+
+    setStrengthChecks(checks);
+  };
+
+  const handlePassword = (passwordValue) => {
+    checkPasswordStrength(passwordValue);
+
+    const checks = {
+      length: passwordValue.length >= 8,
+      hasUpperCase: /[A-Z]+/.test(passwordValue),
+      hasLowerCase: /[a-z]+/.test(passwordValue),
+      hasDigit: /[0-9]+/.test(passwordValue),
+      hasSpecialChar: /[^A-Za-z0-9]+/.test(passwordValue),
+    };
+
+    setStrengthChecks(checks);
+
+    strengthChecks.length = passwordValue.length >= 8 ? true : false;
+    strengthChecks.hasUpperCase = /[A-Z]+/.test(passwordValue);
+    strengthChecks.hasLowerCase = /[a-z]+/.test(passwordValue);
+    strengthChecks.hasDigit = /[0-9]+/.test(passwordValue);
+    strengthChecks.hasSpecialChar = /[^A-Za-z0-9]+/.test(passwordValue);
+
+    let verifiedList = Object.values(strengthChecks).filter((value) => value);
+
+    let strength =
+      verifiedList.length === 5
+        ? "Fort"
+        : verifiedList.length >= 2
+        ? "Moyen"
+        : "Faible";
+
+    setPassword(passwordValue);
+    setProgress(`${(verifiedList.length / 5) * 100}%`);
+    setMessage(strength);
+  };
+
+  const getActiveColor = (type) => {
+    if (type === "Fort") return "text-green-500 text-xs";
+    if (type === "Moyen") return "text-yellow-500 text-xs";
+    return "text-red-500 text-xs";
+  };
+
+  const getActiveColorBar = (type) => {
+    if (type === "Fort") return "bg-green-500";
+    if (type === "Moyen") return "bg-yellow-500";
+    return "bg-red-500";
   };
 
   return (
