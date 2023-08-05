@@ -53,7 +53,7 @@ const LoginPage = () => {
 
   return (
     <div className="relative flex h-screen flex-col justify-center overflow-hidden">
-      <div className="m-auto w-full rounded-md bg-white p-6 shadow-md lg:max-w-lg">
+      <div className="m-auto w-full rounded-xl border border-[#E4E4E7] bg-white p-6  lg:max-w-lg">
         <h1 className="text-center text-3xl font-semibold text-blue-700">
           Connectez-vous
         </h1>
@@ -65,7 +65,7 @@ const LoginPage = () => {
             <input
               type="text"
               placeholder="wbuffet@gmail.com"
-              className="w-full rounded-lg focus:border-blue-300 focus:bg-white"
+              className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -78,9 +78,10 @@ const LoginPage = () => {
               <input
                 type={hidePassword ? "password" : "text"}
                 name="password"
+                placeholder="Votre mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt w-full rounded-lg p-2 focus:border-blue-300 focus:bg-white"
+                className="mt w-full rounded-lg border-[#E4E4E7] p-2 focus:border-blue-300 focus:bg-white"
               />
               <a
                 onClick={() => setHidePassword(!hidePassword)}
