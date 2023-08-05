@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const SignUpage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [nickname, setNickname] = useState("");
+  const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,7 +41,7 @@ const SignUpage = () => {
 
   return (
     <div className="relative flex h-screen flex-col justify-center overflow-hidden">
-      <div className="m-auto w-full rounded-md bg-white p-6 shadow-xl lg:max-w-lg">
+      <div className="m-auto w-full rounded-xl border border-[#E4E4E7] bg-white p-6 lg:max-w-lg">
         <h1 className="text-center text-3xl font-semibold text-blue-700">
           Inscrivez-vous
         </h1>
@@ -50,7 +53,7 @@ const SignUpage = () => {
             <input
               type="text"
               placeholder="Votre pseudo"
-              className="input-bordered input-primary input w-full"
+              className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
@@ -62,7 +65,7 @@ const SignUpage = () => {
             <input
               type="text"
               placeholder="Adresse mail"
-              className="input-bordered input-primary input w-full"
+              className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -71,13 +74,22 @@ const SignUpage = () => {
             <label className="label">
               <span className="label-text text-base">Mot de passe</span>
             </label>
-            <input
-              type="password"
-              placeholder="Votre mot de passe"
-              className="input-bordered input-primary input w-full"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="flex">
+              <input
+                type={hidePassword ? "password" : "text"}
+                placeholder="Votre mot de passe"
+                className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <a
+                onClick={() => setHidePassword(!hidePassword)}
+                href
+                className="-ml-10 mt-3.5"
+              >
+                {hidePassword ? <IoEyeSharp /> : <FaEyeSlash />}
+              </a>
+            </div>
           </div>
           <div>
             <label className="label">
@@ -85,13 +97,22 @@ const SignUpage = () => {
                 Confirmez votre mot de passe
               </span>
             </label>
-            <input
-              type="password"
-              placeholder="Votre mot de passe"
-              className="input-bordered input-primary input w-full"
-              value={confirmPassword}
-              onChange={(e) => setconfirmPassword(e.target.value)}
-            />
+            <div className="flex">
+              <input
+                type={hidePassword ? "password" : "text"}
+                placeholder="Votre mot de passe"
+                className="w-full rounded-lg border-[#E4E4E7] focus:border-blue-300 focus:bg-white"
+                value={confirmPassword}
+                onChange={(e) => setconfirmPassword(e.target.value)}
+              />
+              <a
+                onClick={() => setHidePassword(!hidePassword)}
+                href
+                className="-ml-10 mt-3.5"
+              >
+                {hidePassword ? <IoEyeSharp /> : <FaEyeSlash />}
+              </a>
+            </div>
           </div>
           <a
             href="#"
