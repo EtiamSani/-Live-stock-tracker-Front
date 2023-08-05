@@ -1,8 +1,16 @@
 import { useState } from "react";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verify, setVerify] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
+
+  const onChange = () => {
+    setVerify(true);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -56,8 +64,8 @@ const LoginPage = () => {
             </label>
             <input
               type="text"
-              placeholder="Email Address"
-              className="input-bordered input-primary input w-full"
+              placeholder="wbuffet@gmail.com"
+              className="w-full rounded-lg focus:border-blue-300 focus:bg-white"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -66,13 +74,22 @@ const LoginPage = () => {
             <label className="label">
               <span className="label-text text-base">Mot de passe</span>
             </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              className="input-bordered input-primary input w-full"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="flex">
+              <input
+                type={hidePassword ? "password" : "text"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt w-full rounded-lg p-2 focus:border-blue-300 focus:bg-white"
+              />
+              <a
+                onClick={() => setHidePassword(!hidePassword)}
+                href
+                className="-ml-10 mt-3.5"
+              >
+                {hidePassword ? <IoEyeSharp /> : <FaEyeSlash />}
+              </a>
+            </div>
           </div>
           <a
             href="#"
