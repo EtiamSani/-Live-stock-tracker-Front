@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 
 const logos = [
-  "../public/images/Berkshire.png",
-  "../public/images/blackrock.png",
-  "../public/images/fundsmith.png",
-  "../public/images/Vanguard.png",
-  "../public/images/jp.png",
+  "/images/Berkshire.png",
+  "/images/blackrock.png",
+  "/images/fundsmith.png",
+  "/images/Vanguard.png",
+  "/images/jp.png",
 ];
 
 function LogoSlider() {
